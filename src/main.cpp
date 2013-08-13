@@ -8,10 +8,10 @@
 #include <SDL/SDL.h>
 #include <physim/headers/framer.hpp>
 #include <physim/headers/vect.hpp>
+#include <aria/headers/global_assets.hpp>
 #include <string>
 #include <SDL/SDL_ttf.h>
 #include <stdlib.h>
-bool ended=false;
 
 class mouse
 {
@@ -30,30 +30,26 @@ public:
 		}
 	}
 };
-framer frm;
-SDL_Event event;
 mouse ms;
+framer frm;
 void handle_events();
 using namespace std;
 int main(int argc,char* args[])
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	TTF_Init();
-	TTF_Font* font=TTF_OpenFont("physim/Fonts/lazy.ttf",28);
-	SDL_Surface* scr=SDL_SetVideoMode(1080,720,32,SDL_SWSURFACE);
-	SDL_Color TextColor;
-	TextColor.r=255;
-	TextColor.g=0;TextColor.b=0;
-	string time;
-	time.assign("test");
+	font=TTF_OpenFont("physim/Fonts/lazy.ttf",28);
+	scr=SDL_SetVideoMode(1080,720,32,SDL_SWSURFACE);
+	graphicstring time;
+	time.set("test");
+	time.set(0,255,0);
+	SDL_Delay(100);
 	while(!ended)
 	{
 		handle_events();
-		SDL_Surface* timming=TTF_RenderText_Solid(font,time.c_str(),TextColor);
-		timming->clip_rect.x=scr->clip_rect.w/2;
-		timming->clip_rect.y=scr->clip_rect.h/2;
 		SDL_FillRect(scr,&scr->clip_rect,0x999999);
-		SDL_BlitSurface(timming,NULL,scr,&timming->clip_rect);
+		time.set(frm.total_elapse());
+		time.display();
 		SDL_Flip(scr);
 		frm.endframe();
 		frm.smartwait();
