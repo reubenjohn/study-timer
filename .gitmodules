@@ -1,3 +1,6 @@
 [submodule "physim"]
 	path = physim
 	url = https://github.com/PhySim/physim.git
+[submodule "aria"]
+	path = aria
+	url = https://github.com/PhySim/ARIA.git
