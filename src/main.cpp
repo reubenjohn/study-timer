@@ -8,31 +8,17 @@
 #include <SDL/SDL.h>
 #include <physim/headers/framer.hpp>
 #include <physim/headers/vect.hpp>
-#include <aria/headers/global_assets.hpp>
+#include <headers/global_assets.hpp>
+#include <headers/button.hpp>
+#include <headers/mouse.hpp>
 #include <string>
 #include <SDL/SDL_ttf.h>
-#include <stdlib.h>
 
-class mouse
-{
-public:
-	SDL_Rect pos;
-	mouse()
-	{
-		pos.x=pos.y=0;
-	}
-	void handle_events(SDL_Event event)
-	{
-		if(event.type==SDL_MOUSEMOTION)
-		{
-			pos.x=event.motion.x;
-			pos.y=event.motion.y;
-		}
-	}
-};
+
 mouse ms;
 framer frm;
-void handle_events();
+timer t;
+void handle_events(SDL_Event event);
 using namespace std;
 int main(int argc,char* args[])
 {
@@ -40,35 +26,61 @@ int main(int argc,char* args[])
 	TTF_Init();
 	font=TTF_OpenFont("physim/Fonts/lazy.ttf",28);
 	scr=SDL_SetVideoMode(1080,720,32,SDL_SWSURFACE);
+
 	graphicstring time;
-	time.set("test");
+	button toggle,lap;
+	toggle.graphictext.set("start/stop");
+	lap.graphictext.set("lap");	lap.set(500,500);
+	time.set("0");
 	time.set(0,255,0);
-	SDL_Delay(100);
+	SDL_Delay(500);
+
 	while(!ended)
 	{
-		handle_events();
+		toggle.refresh();
+		lap.refresh();
+		while(SDL_PollEvent(&event))
+		{
+			handle_events(event);
+			toggle.handle_events(event);
+			lap.handle_events(event);
+		}
+		if(toggle.state==-2)
+			t.toggle();
+		if(lap.state==-2)
+			t.reset();
+
 		SDL_FillRect(scr,&scr->clip_rect,0x999999);
-		time.set(frm.total_elapse());
+		time.set(t.elapse());
 		time.display();
+		toggle.display();
+		lap.display();
+
 		SDL_Flip(scr);
 		frm.endframe();
 		frm.smartwait();
 	}
+	TTF_Quit();
 	SDL_Quit();
 	return 1;
 }
-void handle_events()
+void handle_events(SDL_Event event)
 {
-	while(SDL_PollEvent(&event))
+	switch(event.type)
 	{
-		switch(event.type)
+	case SDL_KEYDOWN:
+		switch((unsigned int)event.key.keysym.sym)
 		{
-		case SDL_QUIT:
-			ended=true;
-		break;
-		case SDL_MOUSEMOTION:
-			ms.handle_events(event);
+		case SDLK_RETURN:
+			t.toggle();
 		break;
 		}
+	break;
+	case SDL_MOUSEMOTION:
+		ms.handle_events(event);
+	break;
+	case SDL_QUIT:
+		ended=true;
+	break;
 	}
 }
