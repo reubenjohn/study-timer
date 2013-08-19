@@ -43,6 +43,7 @@
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="SDL"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="SDL_image"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="SDL_ttf"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="SDL_mixer"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.852250033" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;C:\Softwares\Downloaded\eclipse\MinGW&quot;"/>

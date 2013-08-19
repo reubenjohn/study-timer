@@ -20,18 +20,21 @@ public:
 	int state;
 	graphicstring graphictext;
 	SDL_Rect rect;
-	void set(int x,int y)
+	void set(int x,int y,unsigned int w=400,unsigned int h=100)
 	{
-		rect.x=x;
-		rect.y=y;
-		graphictext.set(rect.x,rect.y);
+		if(x>0)
+			rect.x=x;
+		if(y>0)
+			rect.y=y;
+		rect.w=w;
+		rect.h=h;
+		graphictext.set(rect.x,rect.y+rect.h/4);
 	}
 	button(const char* U="button")
 	{
 		state=0;
+		graphictext.set(rect.x,(rect.y+rect.h)/2);
 		graphictext.set(U);
-		rect.w=500;
-		rect.h=100;
 		set(100,100);
 	}
 	void display()
