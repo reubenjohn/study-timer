@@ -35,15 +35,16 @@ int main(int argc,char* args[])
 	Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 );
 	Mix_Init(MIX_INIT_MP3);
 	Mix_Chunk *beat=Mix_LoadWAV("audio/Beat.wav"),*beat_z=Mix_LoadWAV("audio/Beat z.wav"),*beep=Mix_LoadWAV("audio/beep.wav"),*other;
-	font=TTF_OpenFont("physim/Fonts/lazy.ttf",28);
+	font=TTF_OpenFont("Fonts/lazy.ttf",28);
 	scr=SDL_SetVideoMode(1080,720,32,SDL_SWSURFACE);
+	SDL_Rect progress=scr->clip_rect;
 
 	graphicstring message;
 	timer mesaage_update;
 	bool first_run=true;
-	if(remove("first_run")==0)
+	if(remove("Data/first_run")==0)
 		first_run=false;
-	ofstream preferences("first_run");
+	ofstream preferences("Data/first_run");
 	preferences<<"This file exists... which means this is not the first run of this program(delete me to show the welcome message)...";
 	preferences.close();
 	if(first_run==true)
@@ -198,7 +199,7 @@ int main(int argc,char* args[])
 		}
 		if(save_state.state==-3)
 		{
-			ofstream fout("save.txt");
+			ofstream fout("Data/save.txt");
 			fout<<target<<' '<<t.elapse()<<' ';
 			for(unsigned int i=0;i<laps.size();i++)
 				fout<<laps[i]<<' ';
@@ -207,7 +208,7 @@ int main(int argc,char* args[])
 		if(load.state==-3)
 		{
 			laps.clear();
-			ifstream fin("save.txt");
+			ifstream fin("Data/save.txt");
 			float temp=0;
 			fin>>target>>temp;
 			t.set(temp);
@@ -216,7 +217,8 @@ int main(int argc,char* args[])
 				laps.push_back(temp);
 				avg+=temp;
 			}
-			avg/=laps.size();
+			if(laps.size()>0)
+				avg/=laps.size();
 		}
 		if(toggle.state==-2)
 		{
@@ -252,6 +254,10 @@ int main(int argc,char* args[])
 		}
 
 		SDL_FillRect(scr,&scr->clip_rect,0x009999);
+		float temp=((double)t.elapse()/(target*1000.0));
+		progress.h=scr->clip_rect.h*temp;
+		progress.y=scr->clip_rect.h-progress.h;
+		SDL_FillRect(scr,&progress,0xFFCC00);
 		time.set(50,380);
 		time.set("Elapse");
 		time.display();
@@ -266,6 +272,9 @@ int main(int argc,char* args[])
 		}
 		for(unsigned int i=0;i<laps.size();i++)
 		{
+			laptime.set((int)i+1);
+			laptime.set(lap_pos.x-75,lap_pos.y+(laps.size()-i)*global_font_size);
+			laptime.display();
 			laptime.set(laps[i]);
 			laptime.set(lap_pos.x,lap_pos.y+(laps.size()-i)*global_font_size);
 			laptime.display();
@@ -299,9 +308,9 @@ int main(int argc,char* args[])
 	SDL_FreeSurface(scr);
 	TTF_CloseFont(font);
 	Mix_FreeChunk(beat);
-	SDL_Quit();
 	Mix_Quit();
 	TTF_Quit();
+	SDL_Quit();
 	return 1;
 }
 void handle_events(SDL_Event event)
