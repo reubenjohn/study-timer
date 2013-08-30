@@ -314,7 +314,9 @@ int main(int argc,char* args[])
 	Mix_Quit();
 	TTF_Quit();
 	SDL_Quit();
-	return 1;
+	ShowWindow(hwnd,true);
+	exit(0);
+	return 0;
 }
 void handle_events(SDL_Event event)
 {
