@@ -16,6 +16,7 @@
 #include <vector>
 #include <fstream>
 #include <SDL/SDL_ttf.h>
+#include <windows.h>
 
 #define wait___ {bool stop=false;while(!stop){if(SDL_PollEvent(&event))if(event.type==SDL_KEYDOWN||event.type==SDL_QUIT){stop=true;if(event.type==SDL_QUIT)ended=true;}}}
 
@@ -29,6 +30,8 @@ void handle_events(SDL_Event event);
 using namespace std;
 int main(int argc,char* args[])
 {
+	HWND hwnd=FindWindowA("ConsoleWindowClass",NULL);
+	ShowWindow(hwnd,false);
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_EnableUNICODE(SDL_ENABLE);
 	TTF_Init();
