@@ -25,23 +25,48 @@ framer frm;
 timer t,warn;
 bool need_target=false,user_lapped=false;
 unsigned int warning=0;
+HWND hwnd;
 SDL_Rect lap_pos={750,10};
-void handle_events(SDL_Event event);
-using namespace std;
-int main(int argc,char* args[])
+Mix_Chunk *beat,*beat_z,*beep,*welcome;
+void init()
 {
-	HWND hwnd=FindWindowA("ConsoleWindowClass",NULL);
+	hwnd=FindWindowA("ConsoleWindowClass",NULL);
 	ShowWindow(hwnd,false);
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_EnableUNICODE(SDL_ENABLE);
 	TTF_Init();
 	Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 );
 	Mix_Init(MIX_INIT_MP3);
-	Mix_Chunk *beat=Mix_LoadWAV("audio/Beat.wav"),*beat_z=Mix_LoadWAV("audio/Beat z.wav"),*beep=Mix_LoadWAV("audio/beep.wav"),*other;
+	beat=Mix_LoadWAV("audio/Beat.wav");
+	beat_z=Mix_LoadWAV("audio/Beat z.wav");
+	beep=Mix_LoadWAV("audio/beep.wav");
 	font=TTF_OpenFont("Fonts/lazy.ttf",28);
 	scr=SDL_SetVideoMode(1080,720,32,SDL_SWSURFACE);
+}
+void quit()
+{
+	SDL_FreeSurface(scr);
+	TTF_CloseFont(font);
+	Mix_FreeChunk(beat);
+	Mix_Quit();
+	TTF_Quit();
+	SDL_Quit();
+	ShowWindow(hwnd,true);
+}
+void introduce()
+{
+	SDL_FillRect(scr,&scr->clip_rect,0xffff55);
+	SDL_Flip(scr);
+	welcome=Mix_LoadWAV("audio/welcome.wav");
+	Mix_PlayChannel(-1,welcome,0);
+	wait___
+}
+void handle_events(SDL_Event event);
+using namespace std;
+int main(int argc,char* args[])
+{
+	init();
 	SDL_Rect progress=scr->clip_rect;
-
 	graphicstring message;
 	timer mesaage_update;
 	bool first_run=true;
@@ -52,16 +77,12 @@ int main(int argc,char* args[])
 	preferences.close();
 	if(first_run==true)
 	{
-		SDL_FillRect(scr,&scr->clip_rect,0xffff55);
+		introduce();
 		message.set(0,255,0);
 		message.set(10,300);
 		message.set_font(40);
 		message.set("Welcome! This may be your first time.\n(Press any key to continue)");
 		message.display();
-		SDL_Flip(scr);
-		other=Mix_LoadWAV("audio/welcome.wav");
-		Mix_PlayChannel(-1,other,0);
-		wait___
 	}
 	SDL_FillRect(scr,&scr->clip_rect,0x990000);
 	SDL_Flip(scr);
@@ -308,14 +329,7 @@ int main(int argc,char* args[])
 		frm.endframe();
 		frm.smartwait();
 	}
-	SDL_FreeSurface(scr);
-	TTF_CloseFont(font);
-	Mix_FreeChunk(beat);
-	Mix_Quit();
-	TTF_Quit();
-	SDL_Quit();
-	ShowWindow(hwnd,true);
-	exit(0);
+	quit();
 	return 0;
 }
 void handle_events(SDL_Event event)
