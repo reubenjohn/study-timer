@@ -9,7 +9,7 @@
 #include <SDL/SDL_mixer.h>
 #include <physim/headers/framer.hpp>
 #include <physim/headers/vect.hpp>
-#include <headers/global_assets.hpp>
+#include <aria/headers/global_assets.hpp>
 #include <headers/button.hpp>
 #include <headers/mouse.hpp>
 #include <string>
