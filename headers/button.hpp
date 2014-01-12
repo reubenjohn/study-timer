@@ -18,7 +18,7 @@ class button
 {
 public:
 	int state;
-	graphicstring graphictext;
+	graphicstring* graphictext;
 	SDL_Rect rect;
 	void set(int x,int y,unsigned int w=400,unsigned int h=100)
 	{
@@ -28,19 +28,20 @@ public:
 			rect.y=y;
 		rect.w=w;
 		rect.h=h;
-		graphictext.set(rect.x,rect.y+rect.h/4);
+		graphictext->set_position(rect.x,rect.y+rect.h/4);
 	}
-	button(const char* U="button")
+	button(SDL_Surface* screen,const char* U="button")
 	{
+		graphictext=new graphicstring(screen);
 		state=0;
-		graphictext.set(rect.x,(rect.y+rect.h)/2);
-		graphictext.set(U);
+		graphictext->set_position(rect.x,(rect.y+rect.h)/2);
+		graphictext->set(U);
 		set(100,100);
 	}
 	void display()
 	{
 		SDL_FillRect(scr,&rect,0x00FF00);
-		graphictext.display();
+		graphictext->display();
 	}
 	int handle_events(SDL_Event event)
 	{

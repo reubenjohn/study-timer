@@ -5,20 +5,7 @@
  *      Author: Reuben
  */
 
-#include <SDL/SDL.h>
-#include <SDL/SDL_mixer.h>
-#include <physim/headers/framer.hpp>
-#include <physim/headers/vect.hpp>
-#include <aria/headers/global_assets.hpp>
-#include <headers/button.hpp>
-#include <headers/mouse.hpp>
-#include <string>
-#include <vector>
-#include <fstream>
-#include <SDL/SDL_ttf.h>
-#include <windows.h>
-
-#define wait___ {bool stop=false;while(!stop){if(SDL_PollEvent(&event))if(event.type==SDL_KEYDOWN||event.type==SDL_QUIT){stop=true;if(event.type==SDL_QUIT)ended=true;}}}
+#include <headers/study timer.h>
 
 mouse ms;
 framer frm;
@@ -28,7 +15,7 @@ unsigned int warning=0;
 HWND hwnd;
 SDL_Rect lap_pos={750,10};
 Mix_Chunk *beat,*beat_z,*beep,*welcome;
-void init()
+/*void init()
 {
 	hwnd=FindWindowA("ConsoleWindowClass",NULL);
 	ShowWindow(hwnd,false);
@@ -61,11 +48,17 @@ void introduce()
 	Mix_PlayChannel(-1,welcome,0);
 	wait___
 }
-void handle_events(SDL_Event event);
+void handle_events(SDL_Event event);*/
 using namespace std;
 int main(int argc,char* args[])
 {
-	init();
+	STUDY_TIMER T;
+	T.perform_first_run();
+	if(T.first_run())
+	{
+		T.mark_as_run_before();
+	}
+	/*init();
 	SDL_Rect progress=scr->clip_rect;
 	graphicstring message;
 	timer mesaage_update;
@@ -329,9 +322,10 @@ int main(int argc,char* args[])
 		frm.endframe();
 		frm.smartwait();
 	}
-	quit();
+	quit();*/
 	return 0;
 }
+/*
 void handle_events(SDL_Event event)
 {
 	switch(event.type)
@@ -355,3 +349,4 @@ void handle_events(SDL_Event event)
 	break;
 	}
 }
+*/
