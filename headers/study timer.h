@@ -18,15 +18,16 @@
 #include <SDL/SDL_ttf.h>
 #include <windows.h>
 
-#define wait___ {bool stop=false;while(!stop){if(SDL_WaitEvent(&event))if(event.type==SDL_KEYDOWN||event.type==SDL_QUIT){stop=true;if(event.type==SDL_QUIT)ended=true;}}}
-
 class SDL
 {
 public:
 	SDL_Surface* scr;
+	SDL_Event event;
 	HWND hwnd;
+	bool quit;
 	SDL(SDL_Surface* screen)
 	{
+		quit=false;
 		hwnd=FindWindowA("ConsoleWindowClass",NULL);
 		ShowWindow(hwnd,false);
 		SDL_Init(SDL_INIT_EVERYTHING);
@@ -42,24 +43,47 @@ public:
 		TTF_Quit();
 		SDL_Quit();
 	}
+	void wait()
+	{
+		bool stop=false;
+		while(!quit&&!stop)
+		{
+			if(SDL_WaitEvent(&event))
+			{
+				if(event.type==SDL_KEYDOWN)
+					stop=true;
+				if(event.type==SDL_QUIT)
+					quit=true;
+			}
+		}
+	}
+	int poll_event()
+	{
+		return SDL_PollEvent(&event);
+	}
+	void SDL_handle_events()
+	{
+		if(event.type==SDL_QUIT)
+		{
+			quit=true;
+		}
+	}
 };
+#define stop___ {bool stop=false;while(!stop){if(SDL_WaitEvent(&event))if(event.type==SDL_KEYDOWN||event.type==SDL_QUIT){stop=true;if(event.type==SDL_QUIT)ended=true;}}}
 class STUDY_TIMER:public SDL
 {
 	bool First_run;
 	vector<float> laps;
 	float avg,target;
 	TTF_Font* font;
+	vect scrdim;
 public:
 	Mix_Chunk *beat,*beat_z,*beep;
 	SDL_Rect progress;
 	graphicstring time,laptime,average,misc;
 	graphicstring message;
 	graphicstringinput user;
-	button toggle;
-	button lap;
-	button target_b;
-	button save_state;
-	button load;
+	button toggle,lap,target_b,save_state,load;
 	timer mesaage_update;
 	mouse ms;
 	framer frm;
@@ -83,13 +107,14 @@ public:
 		message.set_color(0,255,0);
 		message.set_position(10,300);
 		message.set_font(40);
-		vect pos(-50,299,0),vel(0,0,0),destination(50,300,0);
+		vect pos(-50,200,0),vel(0,0,0),destination(50,300,0);
 		Mix_PlayChannel(-1,welcome,0);
 		message.set("Welcome! This may be your first time.\n(Press any key to continue)");
-		unsigned int loop=0;
 		SDL_Delay(50);
-		while((vel.mag()>1)||(fabs(pos.x-destination.x)>1))
+		SDL_Event e;
+		while((vel.mag()>0.01||(destination-pos).mag()>1)&&!quit)
 		{
+			vel*=0.9;
 			vel+=0.01*(destination-pos);
 			pos+=vel;
 			SDL_FillRect(scr,&scr->clip_rect,0xffff55);
@@ -97,9 +122,15 @@ public:
 			message.display();
 			SDL_Flip(scr);
 			SDL_Delay(25);
-			loop++;
+			while(SDL_PollEvent(&e))
+			{
+				if(e.type==SDL_QUIT)
+					quit=true;
+			}
 		}
-		wait___
+		wait();
+		//load_timer_elements();
+		//overlay_help();
 		Mix_FreeChunk(welcome);
 		SDL_FillRect(scr,&scr->clip_rect,0x990000);
 		SDL_Flip(scr);
@@ -130,8 +161,6 @@ public:
 		average.set_font(40);
 		average.set_position(260,380);
 		average.set("Average");
-		average.display();
-
 		message.set_font(60);
 		message.set_position(50,650);
 		time.set_font(40);
@@ -140,6 +169,7 @@ public:
 		time.set_color(0,255,0);
 		time.set("Elapse");
 	}
+
 	void overlay_help()
 	{
 		misc.set_color(0,150,255);
@@ -175,7 +205,7 @@ public:
 		average.display();
 		average.set_font(40);
 		average.set_position(250,430);
-		average.set((avg*laps.size()+t.elapse()/1000.f)/(laps.size()+1));
+		average.set(0);
 		average.display();
 		toggle.display();
 		lap.display();
@@ -190,17 +220,17 @@ public:
 		time.set_position(0,380-50);
 		time.set_font(30);
 		time.set("(Time you took for current lap)");
-		time.display();
+		/*time.display();
 		time.set_font(40);
 		time.set_position(50,430);
-		time.set((int)t.elapse()/1000.0);
+		time.set(0);
 		time.display();
 		message.set_font(40);
 		message.set("Welcome!...New messages will pop up here...");
 		message.display();
-		message.set_font(60);
+		message.set_font(60);*/
 	}
-	STUDY_TIMER():SDL(SDL_SetVideoMode(1080,720,32,SDL_SWSURFACE)),time(scr),laptime(scr),average(scr),misc(scr),message(scr),user(scr),toggle(scr),lap(scr),target_b(scr),save_state(scr),load(scr)
+	STUDY_TIMER(vect screen_dimensions=(vect){1080,720,32}):SDL(SDL_SetVideoMode(screen_dimensions.x,screen_dimensions.y,screen_dimensions.z,SDL_SWSURFACE)),time(scr),laptime(scr),average(scr),misc(scr),message(scr),user(scr),toggle(scr),lap(scr),target_b(scr),save_state(scr),load(scr)
 	{
 		avg=0;
 		target=20;
@@ -210,18 +240,20 @@ public:
 		beep=Mix_LoadWAV("audio/beep.wav");*/
 		beat=beat_z=beep=NULL;
 		font=TTF_OpenFont("Fonts/KeraterMedium.ttf",28);
-		SDL_FillRect(scr,&scr->clip_rect,0x2468A);
+		SDL_FillRect(scr,&scr->clip_rect,0x8800DD);
+		graphicstring study_timer(scr,"STUDY TIMER");
+		study_timer.set_position(screen_dimensions*0.4);
+		study_timer.set_font(32);
+		study_timer.display();
 		SDL_Flip(scr);
+		SDL_Delay(1000);
 		progress=scr->clip_rect;
 		load_timer_elements();
 		if(first_run())
 		{
 			SDL_FillRect(scr,&scr->clip_rect,0x990000);
 			SDL_Flip(scr);
-			//overlay_help();
 		}
-		SDL_Delay(1000);
-		SDL_Flip(scr);
 	}
 	~STUDY_TIMER()
 	{
