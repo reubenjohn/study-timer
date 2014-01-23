@@ -18,8 +18,8 @@ class button
 {
 public:
 	int state;
-	graphicstring* graphictext;
 	SDL_Rect rect;
+	graphicstring* graphictext;
 	void set(int x,int y,unsigned int w=400,unsigned int h=100)
 	{
 		if(x>0)
@@ -30,12 +30,20 @@ public:
 		rect.h=h;
 		graphictext->set_position(rect.x,rect.y+rect.h/4);
 	}
-	button(SDL_Surface* screen,const char* U="button")
+	button(SDL_Surface* screen,TTF_Font* U_font=NULL,const char* text="button",unsigned int graphic_update_interval=50)
 	{
-		graphictext=new graphicstring(screen);
+		ofstream fout("logs/allocation log.txt",ios::app);
+		graphictext=new graphicstring(screen,U_font,text,graphic_update_interval);
+		if(graphictext)
+		{
+			fout<<"Button->graphicstring allocated\n";
+		}
+		else
+			fout<<"Button->graphicstring allocation failed!\n";
+		fout.close();
 		state=0;
 		graphictext->set_position(rect.x,(rect.y+rect.h)/2);
-		graphictext->set(U);
+		graphictext->set(text);
 		set(100,100);
 	}
 	void display()

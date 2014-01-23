@@ -60,6 +60,16 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<folderInfo id="cdt.managedbuild.config.gnu.mingw.exe.debug.1172811942.47867558" name="/" resourcePath="aria/src">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.mingw.exe.debug.1277393950" name="MinGW GCC" superClass="cdt.managedbuild.toolchain.gnu.mingw.exe.debug" unusedChildren="">
+							<tool id="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug.690992429" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug.1501967360"/>
+							<tool id="cdt.managedbuild.tool.gnu.archiver.mingw.base.132508150" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.mingw.base.1825417017"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.debug.160808076" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.debug.1589247056"/>
+							<tool id="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.708867758" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.2039290458"/>
+							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.debug.1014421366" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.debug.1669551885"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.debug.1377515128" name="MinGW C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.debug.13206587"/>
+						</toolChain>
+					</folderInfo>
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
@@ -121,7 +131,14 @@
 		<project id="Study Timer.cdt.managedbuild.target.gnu.mingw.exe.1763101748" name="Executable" projectType="cdt.managedbuild.target.gnu.mingw.exe"/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
-	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/Study Timer"/>
+		</configuration>
+		<configuration configurationName="Debug">
+			<resource resourceType="PROJECT" workspacePath="/Study Timer"/>
+		</configuration>
+	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.exe.release.301942091;cdt.managedbuild.config.gnu.mingw.exe.release.301942091.;cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.release.1134815334;cdt.managedbuild.tool.gnu.c.compiler.input.1526911955">

@@ -52,13 +52,13 @@ void handle_events(SDL_Event event);*/
 using namespace std;
 int main(int argc,char* args[])
 {
-	STUDY_TIMER T;
+	STUDY_TIMER T((vect){1080,720,32},"Fonts/KeraterMedium.ttf",32);
 	if(T.first_run())
 	{
 		T.perform_first_run();
 		T.mark_as_run_before();
 	}
-	T.load_timer_elements();
+	T.overlay_help();
 	while(!T.quit)
 	{
 		//..........................................................initialisation
