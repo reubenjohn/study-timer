@@ -88,9 +88,9 @@ public:
 	FONT_POCKET font_pocket;
 	Mix_Chunk *beat,*beat_z,*beep;
 	SDL_Rect progress;
-	graphicstring time,laptime,average,misc;
-	graphicstring message;
-	graphicstringinput user;
+	GRAPHIC_STRING time,laptime,average,misc,message;
+	vect time_pos,laptime_pos,average_pos,message_pos;
+	GRAPHIC_STRING_INPUT user;
 	button toggle,lap,target_b,save_state,load;
 	timer mesaage_update;
 	mouse ms;
@@ -114,23 +114,33 @@ public:
 		Mix_Chunk* welcome=Mix_LoadWAV("audio/welcome.wav");
 		message.set_color(0,255,0);
 		message.set_position(10,300);
-		message.set("Welcome! This may be your first time.\n(Press any key to continue)");
 		ofstream fout("logs/allocation log.txt",ios::app);
 		fout<<"set message\n";
 		fout.close();
-						TTF_Font* temp=TTF_OpenFont("Fonts/KeraterMedium.ttf",28);
+						/*TTF_Font* temp=TTF_OpenFont("Fonts/KeraterMedium.ttf",25);
 						SDL_Color col={0,250,0};
 						SDL_Rect rec={10,10,0,0};
 						SDL_Surface* temp2=TTF_RenderText_Solid(temp,"Starting up...",col);
 						SDL_BlitSurface(temp2,NULL,scr,&rec);
 						update();
-						TTF_CloseFont(temp);
-						SDL_FreeSurface(temp2);
-		SDL_Delay(100);
+						SDL_FreeSurface(temp2);*/
+		//SDL_Delay(1000);
 		fout.open("logs/allocation log.txt",ios::app);
+		ofstream fout2("logs/log.txt",ios::app);
+		GRAPHIC_STRING any_key(scr,NULL,5000);
+		fout2<<"scr="<<scr<<'\n';
+		any_key.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",50));
+		any_key="(Tap any key to continue)";
+		SDL_Delay(1000);
+		message="Welcome! This may be your first time.";//\n(Press any key to continue)");
 		message.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",50));
+		message.set_position(200,100);
+		message.display();
+		message.set_update_interval(1000);
+		SDL_Delay(25);
 		fout<<"set message font\n";
 		fout.close();
+		update();
 		vect pos(-75,300,0),vel(0,0,0),destination(50,300,0);
 		double damping=0.9;
 		Mix_PlayChannel(-1,welcome,0);
@@ -141,9 +151,11 @@ public:
 			vel+=0.01*(destination-pos);
 			pos+=vel;
 			SDL_FillRect(scr,&scr->clip_rect,0xffff55);
+			any_key.set_position(pos.x,pos.y+60);
+			any_key.display();
 			message.set_position(pos);
 			message.display();
-			SDL_Flip(scr);
+			update();
 			SDL_Delay(25);
 			while(SDL_PollEvent(&e))
 			{
@@ -158,6 +170,7 @@ public:
 		try
 		{
 			load_timer_elements();
+			overlay_help();
 		}
 		catch(...)
 		{
@@ -180,44 +193,40 @@ public:
 	{
 		try
 		{
-			if(toggle.graphictext)
-			{
-				toggle.graphictext->set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
-				toggle.graphictext->set_color(0,0,255);
-				toggle.graphictext->set("start/stop");
-				toggle.set(50,200);
-			}
-			if(lap.graphictext)
-			{
-				lap.graphictext->set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
-				lap.graphictext->set("lap");
-				lap.set(50,500);
-			}
-			if(target_b.graphictext)
-			{
-				target_b.set(900,50,200,50);
-				target_b.graphictext->set("Set Goal");
-			}
-			if(save_state.graphictext)
-			{
-			save_state.set(900,150,200,50);
-			save_state.graphictext->set("save_state");
-			}
-			if(load.graphictext)
-			{
-				load.set(900,250,200,50);
-				load.graphictext->set("load");
-			}
+			toggle.graphic_text->set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
+			ofstream fout("logs/allocation log.txt",ios::app);
+			fout.close();
+			toggle.graphic_text->set_color(0,0,255);
+			*toggle.graphic_text="start/stop";
+			toggle.set_dimensions(50,200);
+
+			lap.graphic_text->set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
+			lap.graphic_text->set_color(0,0,0);
+			*lap.graphic_text="lap";
+			lap.set_dimensions(50,500);
+
+			target_b.graphic_text->set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",30));
+			target_b.set_dimensions(900,50,200,50);
+			*target_b.graphic_text="Set Goal";
+
+			save_state.graphic_text->set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",30));
+			save_state.set_dimensions(900,150,200,50);
+			*save_state.graphic_text="save";
+
+			load.graphic_text->set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",30));
+			load.set_dimensions(900,250,200,50);
+			*load.graphic_text="load";
+
 			average.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
 			average.set_position(260,380);
-			average.set("Average");
+			average="Average";
 			message.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",60));
 			message.set_position(50,650);
 			time.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
-			time.set("0");
+			time="0";
 			time.set_position(30,430);
 			time.set_color(0,255,0);
-			time.set("Elapse");
+			time="Elapse";
 		}
 		catch(...)
 		{
@@ -230,64 +239,66 @@ public:
 	{
 		SDL_FillRect(scr,&scr->clip_rect,0x990000);
 		update();
+		GRAPHIC_STRING help_toggle(scr);
 		misc.set_color(0,150,255);
 		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",30));
-		misc.set_position(10,200-50);
-		misc.set("(Start/Stop the current lap time)");
-		misc.display();
+		misc.set_position(10,150);
+		misc="(Start/Stop the current lap time)";
+		misc.display(1);
+		update();
 		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",25));
 		misc.set_color(255,255,0);
 		misc.set_position(900-400,150+10);
-		misc.set("Save the current timer state->");
-		misc.display();
+		misc="Save the current timer state->";
+		misc.display(1);
 		misc.set_position(900-420,225+40);
-		misc.set("Load a previous timer state->");
+		misc="Load a previous timer state->";
 		misc.display();
 		misc.set_position(900-400,150+40);
-		misc.set("Replaces any previous saves!");
-		misc.display();
+		misc="Replaces any previous saves!";
+		misc.display(1);
 		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",30));
 		misc.set_position(900-820,50+10);
-		misc.set("Set your goal(Time you want to take to finish a lap)->");
-		misc.display();
+		misc="Set your goal(Time you want to take to finish a lap)->";
+		misc.display(1);
 		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",28));
 		misc.set_position(500,550);
-		misc.set("Tap any key to continue");
-		misc.display();
+		misc="Tap any key to continue";
+		misc.display(1);
 		update();
-		SDL_Delay(100);
 		average.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",28));
-		average.set_position(250,430);
 		average.set_color(255,0,0);
 		average.set_position(250+180,380+20);
-		average.set("<- Shows the average of all your laps");
-		average.display();
+		average="<- Shows the average of all your laps";
+		average.display(1);
+		average.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
+		average.set_position(250,380);
+		average.set_color(255,0,0);
+		average="Average";
+		average.display(1);
 		average.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",35));
 		average.set_position(250,430);
-		average.set(0);
-		average.display();
+		average=0;
+		average.display(1);
 		update();
-		SDL_Delay(100);
 		time.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
 		time.set_position(50,380);
-		time.set("Elapse");
-		time.display();
+		time="Elapse";
+		time.display(1);
 		time.set_position(0,380-50);
 		time.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",30));
-		time.set("(Time you took for current lap)");
-		time.display();
+		time="(Time you took for current lap)";
+		time.display(1);
 		update();
-		SDL_Delay(100);
+		SDL_Delay(2000);
 		time.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
 		time.set_position(50,430);
-		time.set(0);
-		time.display();
-		message.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",35));
-		message.set("Welcome!...New messages will pop up here...");
-		message.display();
-		message.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",60));
+		time=0;
+		time.display(1);
+		message.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
+		message="Welcome!...New messages will pop up here...";
+		message.display(1);
 		update();
-		SDL_Delay(500);
 		toggle.display();
 		lap.display();
 		target_b.display();
@@ -295,7 +306,7 @@ public:
 		load.display();
 		user.display();
 		update();
-		SDL_Delay(500);
+		wait();
 	}
 	STUDY_TIMER(vect screen_dimensions,const char* default_font_location,unsigned int default_font_size)
 	:
@@ -328,11 +339,14 @@ public:
 		SDL_Surface* temp2=TTF_RenderText_Solid(temp,"Starting up...",col);
 		SDL_BlitSurface(temp2,NULL,scr,&rec);
 		update();
+		TTF_CloseFont(temp);
+		SDL_FreeSurface(temp2);
 		SDL_FillRect(scr,&scr->clip_rect,0x8800DD);
-		graphicstring study_timer(scr);
+		GRAPHIC_STRING study_timer(scr);
 		font_pocket.new_font("Fonts/KeraterMedium.ttf",40);
-		study_timer.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
+		study_timer.set_color(255,0,0);
 		study_timer="Study Timer";
+		study_timer.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
 		study_timer.set_position(screen_dimensions*0.4);
 		study_timer.display();
 		SDL_Flip(scr);
@@ -347,8 +361,6 @@ public:
 		ofstream fout("logs/allocation log.txt",ios::app);
 		fout<<"STUDY_TIMER object created\n";
 		fout.close();
-		TTF_CloseFont(temp);
-		SDL_FreeSurface(temp2);
 	}
 	~STUDY_TIMER()
 	{

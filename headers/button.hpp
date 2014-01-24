@@ -16,11 +16,12 @@
 using namespace std;
 class button
 {
+	SDL_Surface* scr;
 public:
 	int state;
 	SDL_Rect rect;
-	graphicstring* graphictext;
-	void set(int x,int y,unsigned int w=400,unsigned int h=100)
+	GRAPHIC_STRING* graphic_text;
+	void set_dimensions(int x,int y,unsigned int w=400,unsigned int h=100)
 	{
 		if(x>0)
 			rect.x=x;
@@ -28,28 +29,43 @@ public:
 			rect.y=y;
 		rect.w=w;
 		rect.h=h;
-		graphictext->set_position(rect.x,rect.y+rect.h/4);
+		graphic_text->set_position(rect.x+(rect.w/2-graphic_text->rectangle().w/2),rect.y+rect.h/4);
 	}
 	button(SDL_Surface* screen,TTF_Font* U_font=NULL,const char* text="button",unsigned int graphic_update_interval=50)
 	{
+		scr=screen;
 		ofstream fout("logs/allocation log.txt",ios::app);
-		graphictext=new graphicstring(screen,U_font,text,graphic_update_interval);
-		if(graphictext)
+		graphic_text=new GRAPHIC_STRING(screen,U_font,graphic_update_interval);
+		if(graphic_text)
 		{
-			fout<<"Button->graphicstring allocated\n";
+			fout<<"Button->GRAPHIC_STRING allocated\n";
 		}
 		else
-			fout<<"Button->graphicstring allocation failed!\n";
+			fout<<"Button->GRAPHIC_STRING allocation failed!\n";
 		fout.close();
 		state=0;
-		graphictext->set_position(rect.x,(rect.y+rect.h)/2);
-		graphictext->set(text);
-		set(100,100);
+		graphic_text->set_position(rect.x,(rect.y+rect.h)/2);
+		*graphic_text=text;
+		set_dimensions(100,100);
 	}
 	void display()
 	{
-		SDL_FillRect(scr,&rect,0x00FF00);
-		graphictext->display();
+		if(scr)
+			SDL_FillRect(scr,&rect,0x00FF00);
+		else
+		{
+			ofstream fout("logs/allocation log.txt",ios::app);
+			fout<<"button::display scr NULL access\n";
+			fout.close();
+		}
+		if(graphic_text)
+			graphic_text->display();
+		else
+		{
+			ofstream fout("logs/allocation log.txt",ios::app);
+			fout<<"button::display graphic_text NULL access\n";
+			fout.close();
+		}
 	}
 	int handle_events(SDL_Event event)
 	{

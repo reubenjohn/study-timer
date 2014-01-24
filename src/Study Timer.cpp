@@ -58,7 +58,6 @@ int main(int argc,char* args[])
 		T.perform_first_run();
 		T.mark_as_run_before();
 	}
-	T.overlay_help();
 	while(!T.quit)
 	{
 		//..........................................................initialisation
