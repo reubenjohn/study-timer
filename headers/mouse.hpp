@@ -11,7 +11,7 @@
 class mouse
 {
 public:
-	SDL_Rect pos;
+	vect pos;
 	mouse()
 	{
 		pos.x=pos.y=0;

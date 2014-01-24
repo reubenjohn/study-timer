@@ -5,30 +5,13 @@
  *      Author: Reuben
  */
 
-#include <SDL/SDL.h>
-#include <SDL/SDL_mixer.h>
-#include <physim/headers/framer.hpp>
-#include <physim/headers/vect.hpp>
-#include <aria/headers/global_assets.hpp>
-#include <headers/button.hpp>
-#include <headers/mouse.hpp>
-#include <string>
-#include <vector>
-#include <fstream>
-#include <SDL/SDL_ttf.h>
-#include <windows.h>
+#include <headers/study timer.h>
 
-#define wait___ {bool stop=false;while(!stop){if(SDL_PollEvent(&event))if(event.type==SDL_KEYDOWN||event.type==SDL_QUIT){stop=true;if(event.type==SDL_QUIT)ended=true;}}}
-
-mouse ms;
-framer frm;
-timer t,warn;
-bool need_target=false,user_lapped=false;
 unsigned int warning=0;
 HWND hwnd;
 SDL_Rect lap_pos={750,10};
 Mix_Chunk *beat,*beat_z,*beep,*welcome;
-void init()
+/*void init()
 {
 	hwnd=FindWindowA("ConsoleWindowClass",NULL);
 	ShowWindow(hwnd,false);
@@ -61,11 +44,86 @@ void introduce()
 	Mix_PlayChannel(-1,welcome,0);
 	wait___
 }
-void handle_events(SDL_Event event);
+void handle_events(SDL_Event event);*/
 using namespace std;
 int main(int argc,char* args[])
 {
-	init();
+	STUDY_TIMER T((vect){1080,720,32},"Fonts/KeraterMedium.ttf",32);
+	T.updatefpslimits(10,20);
+	if(T.first_run())
+	{
+		T.perform_first_run();
+		T.mark_as_run_before();
+	}
+	else
+	{
+		T.load_timer_elements();
+	}
+	while(!T.quit)
+	{
+		//..........................................................initialisation
+		T.initiate_frame();
+		//..........................................................
+
+		//..........................................................user
+		while(T.poll_event()&&!T.quit)
+		{
+			T.handle_all_events();
+			//handle user target input
+		}
+		//save processing when pause
+		/*else
+		{
+			do
+			{
+				T.initiate_frame();
+				T.display_timer_elements();
+				while(T.wait_event()&&!T.quit)
+					T.handle_all_events();
+				if(T.toggle.being_pressed())
+				{
+					T.toggle_timer();
+					T.initiate_frame();
+				}
+				T.terminate_frame();
+			}while(!T.quit&&!T.timer_running());
+		}
+		*/
+		if(T.target_b.being_pressed())
+		{
+			T.set_need_target(true);
+		}
+		if(T.save_state.pressed())
+		{
+			T.save_to_file();
+		}
+		if(T.load.being_pressed())
+		{
+			T.load_from_file();
+		}
+		if(T.toggle.being_pressed())
+		{
+			T.toggle_timer();
+		}
+		if(T.lap.being_pressed())
+		{
+			T.lap_timer();
+		}
+		//..........................................................
+
+		//..........................................................processing
+		T.process_timer_stats();
+		//..........................................................
+
+		//..........................................................graphics
+		T.display_timer_elements();
+		//..........................................................
+
+		//..........................................................termination
+		T.terminate_frame();
+		//..........................................................
+	}
+	/*init();
 	SDL_Rect progress=scr->clip_rect;
 	graphicstring message;
 	timer mesaage_update;
@@ -182,6 +240,8 @@ int main(int argc,char* args[])
 		wait___
 		goto reload;
 	}
+	*/
+	/*
 	message.set("Welcome!");
 	misc.set_font(30);
 	misc.set(300,600);
@@ -261,6 +321,8 @@ int main(int argc,char* args[])
 			t.start();
 			warning=target*1000/2;
 		}
+		*/
+/*
 		if(mesaage_update.elapse()>1000&&t.state()==1)
 		{
 			if(avg>target)
@@ -276,7 +338,8 @@ int main(int argc,char* args[])
 			mesaage_update.reset();
 			mesaage_update.start();
 		}
-
+*/
+	/*
 		SDL_FillRect(scr,&scr->clip_rect,0x009999);
 		float temp=((double)t.elapse()/(target*1000.0));
 		progress.h=scr->clip_rect.h*temp;
@@ -329,9 +392,10 @@ int main(int argc,char* args[])
 		frm.endframe();
 		frm.smartwait();
 	}
-	quit();
+	quit();*/
 	return 0;
 }
+/*
 void handle_events(SDL_Event event)
 {
 	switch(event.type)
@@ -355,3 +419,4 @@ void handle_events(SDL_Event event)
 	break;
 	}
 }
+*/
