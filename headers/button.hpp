@@ -17,10 +17,30 @@ using namespace std;
 class button
 {
 	SDL_Surface* scr;
-public:
 	int state;
 	SDL_Rect rect;
+public:
 	GRAPHIC_STRING* graphic_text;
+	bool input_fresh()
+	{
+		return state>0;
+	}
+	bool interacted()
+	{
+		return state!=0;
+	}
+	bool hovered()
+	{
+		return state==1;
+	}
+	bool being_pressed()
+	{
+		return state==2;
+	}
+	bool pressed()
+	{
+		return state==3;
+	}
 	void set_dimensions(int x,int y,unsigned int w=400,unsigned int h=100)
 	{
 		if(x>0)
@@ -31,22 +51,13 @@ public:
 		rect.h=h;
 		graphic_text->set_position(rect.x+(rect.w/2-graphic_text->rectangle().w/2),rect.y+rect.h/4);
 	}
-	button(SDL_Surface* screen,TTF_Font* U_font=NULL,const char* text="button",unsigned int graphic_update_interval=50)
+	void set_dimensions(vect pos)
 	{
-		scr=screen;
-		ofstream fout("logs/allocation log.txt",ios::app);
-		graphic_text=new GRAPHIC_STRING(screen,U_font,graphic_update_interval);
-		if(graphic_text)
-		{
-			fout<<"Button->GRAPHIC_STRING allocated\n";
-		}
-		else
-			fout<<"Button->GRAPHIC_STRING allocation failed!\n";
-		fout.close();
-		state=0;
-		graphic_text->set_position(rect.x,(rect.y+rect.h)/2);
-		*graphic_text=text;
-		set_dimensions(100,100);
+		set_dimensions(pos.x,pos.y);
+	}
+	void set_dimensions(vect pos,vect dimensions)
+	{
+		set_dimensions(pos.x,pos.y,dimensions.x,dimensions.y);
 	}
 	void display()
 	{
@@ -73,15 +84,15 @@ public:
 		{
 			if(event.type==SDL_MOUSEBUTTONUP&&(state==-2||state==2))
 			{
-				state=-3;
+				state=3;
 			}
 			else if(event.type==SDL_MOUSEBUTTONDOWN)
 			{
-				state=-2;
+				state=2;
 			}
 			else
 			{
-				state=-1;
+				state=1;
 			}
 		}
 		else
@@ -90,12 +101,29 @@ public:
 	}
 	void refresh()
 	{
-		if(state<0)
+		if(state>=0)
 			state*=-1;
 	}
 	void events_captured()
 	{
 		state=0;
+	}
+	button(SDL_Surface* screen,TTF_Font* U_font=NULL,const char* text="button",unsigned int graphic_update_interval=50)
+	{
+		scr=screen;
+		ofstream fout("logs/allocation log.txt",ios::app);
+		graphic_text=new GRAPHIC_STRING(screen,U_font,graphic_update_interval);
+		if(graphic_text)
+		{
+			fout<<"Button->GRAPHIC_STRING allocated\n";
+		}
+		else
+			fout<<"Button->GRAPHIC_STRING allocation failed!\n";
+		fout.close();
+		state=0;
+		graphic_text->set_position(rect.x,(rect.y+rect.h)/2);
+		*graphic_text=text;
+		set_dimensions(100,100);
 	}
 };
 #endif /* BUTTON_H_ */
