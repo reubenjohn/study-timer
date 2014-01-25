@@ -19,6 +19,7 @@ class button
 	SDL_Surface* scr;
 	int state;
 	SDL_Rect rect;
+	Uint32 color;
 public:
 	GRAPHIC_STRING* graphic_text;
 	bool input_fresh()
@@ -59,10 +60,14 @@ public:
 	{
 		set_dimensions(pos.x,pos.y,dimensions.x,dimensions.y);
 	}
+	void set_color(short unsigned int r,short unsigned int g,short unsigned int b)
+	{
+		color=SDL_MapRGB(scr-> format,r,g,b);
+	}
 	void display()
 	{
 		if(scr)
-			SDL_FillRect(scr,&rect,0x00FF00);
+			SDL_FillRect(scr,&rect,color);
 		else
 		{
 			ofstream fout("logs/allocation log.txt",ios::app);
@@ -110,7 +115,11 @@ public:
 	}
 	button(SDL_Surface* screen,TTF_Font* U_font=NULL,const char* text="button",unsigned int graphic_update_interval=50)
 	{
-		scr=screen;
+		if(scr)
+		{
+			scr=screen;
+			color=SDL_MapRGB(scr-> format,255,0,0);
+		}
 		ofstream fout("logs/allocation log.txt",ios::app);
 		graphic_text=new GRAPHIC_STRING(screen,U_font,graphic_update_interval);
 		if(graphic_text)

@@ -3161,3 +3161,895 @@ Freed beat_z
 Freed beep
 Freed beep
 STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x16b2b50) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x16c5e90) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x16cb358) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x16d0820) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x16f9580) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x1632b48) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x1645e88) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x164b350) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x1650818) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x1679580) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x16c2708) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x16d5a48) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x16daf10) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x16e03d8) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x17094e8) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x163d688) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x16509c8) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x1655e90) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x165b358) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x1681450) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x16bd688) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x16d09c8) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x16d5e90) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x16db358) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x1701450) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x16a0e00) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x16b4140) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x16b9608) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x16bead0) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x16e4ff8) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x16bd428) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x16d0768) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x16d5c30) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x16db0f8) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x1701758) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x162d680) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x16409c0) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x1645e88) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x164b350) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x1671758) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x16c0bf0) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x16d3f30) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x16d93f8) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x16de8c0) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x1704ec8) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x15ed680) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x16009c0) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x1605e88) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x160b350) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x1631758) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x16fd688) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x17109c8) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x1715e90) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 30 (0x173dfe8) loaded into slot 3
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Font Fonts/KeraterMedium.ttf 20 (0) loaded into slot 4
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x16dd688) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x16f09c8) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x16f5e90) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x16fb358) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x1721450) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x16ad688) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x16c09c8) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x16c5e90) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x16cb358) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x16f1eb0) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x166d680) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x16809c0) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x1685e88) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x168b350) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x16b1450) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x165d680) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x16709c0) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x1675e88) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x167b350) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x16a1758) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x16ed6a0) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x17009e0) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x1705ea8) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x170b370) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x17323e8) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+set message
+set message font
+Font Fonts/KeraterMedium.ttf 25 (0x175b810) loaded into slot 5
+Font Fonts/KeraterMedium.ttf 28 (0x1768b88) loaded into slot 6
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x16ad688) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x16c09c8) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x16c5e90) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x16cb358) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x16f1450) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x51d680) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x5309c0) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x535e88) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x53b350) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x561758) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x730bf0) loaded into slot 0
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x75d688) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x7709c8) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x775e90) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x77b358) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x7a1450) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+set message
+set message font
+Font Fonts/KeraterMedium.ttf 25 (0x7ca950) loaded into slot 5
+Font Fonts/KeraterMedium.ttf 28 (0x7d7e00) loaded into slot 6
+Font Fonts/KeraterMedium.ttf 50 (0x743f30) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x7493f8) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x74e8c0) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x774ec8) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+set message
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+set message font
+Font Fonts/KeraterMedium.ttf 25 (0x79e3c8) loaded into slot 5
+Font Fonts/KeraterMedium.ttf 28 (0x7ab2b8) loaded into slot 6
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x15cd680) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x15e09c0) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x15e5e88) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x15eb350) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x1611758) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x161d680) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x16309c0) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x1635e88) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x163b350) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x1661450) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x15fd6a8) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 50 (0x16109e8) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 35 (0x1615eb0) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x161b378) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x16416d8) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x16ad680) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x16c09c0) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x16c5e88) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x16cb350) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x16f3850) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x161d680) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x16309c0) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x1635e88) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x163b350) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x1663850) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x76d680) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x7809c0) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x785e88) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x78b350) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x7b3850) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x7ad680) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x7c09c0) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x7c5e88) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x7cb350) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x7f3850) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x16bd6a8) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x16d09e8) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x16d5eb0) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x16db378) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x1703768) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x1670bf0) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x1683f30) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x16893f8) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x168e8c0) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x16b7d18) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x16cd688) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x16e09c8) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x16e5e90) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x16eb358) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x1714420) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x168d688) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x16a09c8) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x16a5e90) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x16ab358) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x16d43b0) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x163d688) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x16509c8) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x1655e90) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x165b358) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x16843b0) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x7ad688) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x7c09c8) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x7c5e90) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x7cb358) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x7f43b0) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x166d680) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x16809c0) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x1685e88) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x168b350) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x16b43b0) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x1620e00) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x1634140) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x1639608) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 30 (0x1661fd8) loaded into slot 3
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Font Fonts/KeraterMedium.ttf 20 (0) loaded into slot 4
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x16b0bf0) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x16c3f30) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x16c93f8) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x16ce8c0) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x16f7d18) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x168d680) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x16a09c0) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x16a5e88) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 30 (0x16ab350) loaded into slot 3
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Font Fonts/KeraterMedium.ttf 20 (0) loaded into slot 4
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x15fd6a8) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x16109e8) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x1615eb0) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x161b378) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x1643e20) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x167d6a8) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x16909e8) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x1695eb0) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x169b378) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x16c3e20) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x730bf0) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x743f30) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x7493f8) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x74e8c0) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x7776a0) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x15cd680) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x15e09c0) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x15e5e88) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x15eb350) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x1613ff8) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Button->GRAPHIC_STRING allocated
+Font Fonts/KeraterMedium.ttf 40 (0x15cd688) loaded into slot 0
+Font Fonts/KeraterMedium.ttf 35 (0x15e09c8) loaded into slot 1
+Font Fonts/KeraterMedium.ttf 50 (0x15e5e90) loaded into slot 2
+Font Fonts/KeraterMedium.ttf 20 (0x15eb358) loaded into slot 3
+Font Fonts/KeraterMedium.ttf 30 (0x1613ea0) loaded into slot 4
+STUDY_TIMER object created
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+GRAPHIC_STRING destroyed
+Destroying STUDY_TIMER object
+Freed beat
+Freed beat_z
+Freed beep
+Freed beep
+STUDY_TIMER object destroyed

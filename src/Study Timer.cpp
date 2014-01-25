@@ -7,7 +7,6 @@
 
 #include <headers/study timer.h>
 
-unsigned int warning=0;
 HWND hwnd;
 SDL_Rect lap_pos={750,10};
 Mix_Chunk *beat,*beat_z,*beep,*welcome;
@@ -69,7 +68,6 @@ int main(int argc,char* args[])
 		while(T.poll_event()&&!T.quit)
 		{
 			T.handle_all_events();
-			//handle user target input
 		}
 		//save processing when pause
 		/*else
@@ -92,6 +90,10 @@ int main(int argc,char* args[])
 		if(T.target_b.being_pressed())
 		{
 			T.set_need_target(true);
+			if(!T.user_completed())
+			{
+				T.target_b.set_color(150,150,255);
+			}
 		}
 		if(T.save_state.pressed())
 		{
@@ -109,10 +111,22 @@ int main(int argc,char* args[])
 		{
 			T.lap_timer();
 		}
+		if(T.reset_b.pressed())
+		{
+			T.reset_stats();
+		}
 		//..........................................................
 
 		//..........................................................processing
 		T.process_timer_stats();
+		if(T.alarm_time())
+		{
+			T.play_alarm();
+		}
+		if(T.set_message_time())
+		{
+			T.set_message();
+		}
 		//..........................................................
 
 		//..........................................................graphics

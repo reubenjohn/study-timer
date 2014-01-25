@@ -105,20 +105,20 @@ class STUDY_TIMER:public SDL
 	float avg,target,lap_progress;
 	vect scrdim;
 	framer frm;
-	timer t,warn;
+	timer runtimer,first_timer,t,warn,mesaage_update,total_elapse;
 	Mix_Chunk *beat,*beat_z,*beep;
 	SDL_Rect progress;
-	GRAPHIC_STRING elapse_caption,elapse,laptime,average_caption,average,misc,message;
-	vect study_timer_pos,elapse_caption_pos,elapse_pos,laptime_pos,average_caption_pos,average_pos,message_pos;
-	vect lap_pos,lap_dim,toggle_pos,target_b_pos,target_b_dim,save_state_pos,save_state_dim,load_pos,load_dim;
+	GRAPHIC_STRING total_elapsed_caption,total_elapsed,elapse_caption,elapse,laptime,average_caption,average,misc,message;
+	vect study_timer_pos,total_elapsed_caption_pos,total_elapsed_pos,elapse_caption_pos,elapse_pos,laptime_pos,average_caption_pos,average_pos,message_pos;
+	vect lap_pos,lap_dim,toggle_pos,target_b_pos,target_b_dim,save_state_pos,save_state_dim,load_pos,load_dim,reset_b_pos,reset_b_dim;
 	GRAPHIC_STRING graphic_laps_caption;
 	vector<GRAPHIC_STRING*> graphic_laps;
 	vect graphic_laps_caption_pos,graphic_laps_pos;
 	GRAPHIC_STRING_INPUT user;
-	timer mesaage_update;
+	vect user_pos;
 	mouse ms;
 public:
-	button toggle,lap,target_b,save_state,load;
+	button toggle,lap,target_b,save_state,load,reset_b;
 	FONT_POCKET font_pocket;
 	bool first_run()
 	{
@@ -141,21 +141,12 @@ public:
 		ofstream fout("logs/allocation log.txt",ios::app);
 		fout<<"set message\n";
 		fout.close();
-						/*TTF_Font* temp=TTF_OpenFont("Fonts/KeraterMedium.ttf",25);
-						SDL_Color col={0,250,0};
-						SDL_Rect rec={10,10,0,0};
-						SDL_Surface* temp2=TTF_RenderText_Solid(temp,"Starting up...",col);
-						SDL_BlitSurface(temp2,NULL,scr,&rec);
-						update();
-						SDL_FreeSurface(temp2);*/
-		//SDL_Delay(1000);
 		fout.open("logs/allocation log.txt",ios::app);
 		ofstream fout2("logs/log.txt",ios::app);
 		GRAPHIC_STRING any_key(scr,NULL,5000);
 		fout2<<"scr="<<scr<<'\n';
 		any_key.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",50));
 		any_key="(Tap any key to continue)";
-		SDL_Delay(1000);
 		message="Welcome! This may be your first time.";
 		message.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",50));
 		message.set_position(200,100);
@@ -212,7 +203,6 @@ public:
 		update();
 		wait();
 		SDL_Flip(scr);
-		SDL_Delay(500);
 	}
 	void mark_as_run_before()
 	{
@@ -233,6 +223,10 @@ public:
 		save_state_dim=(vect){200,50,0};
 		load_pos=(vect){900,250,0};
 		load_dim=(vect){200,50,0};
+		reset_b_pos=(vect){900,450,0};
+		reset_b_dim=(vect){200,100,0};
+		total_elapsed_caption_pos=(vect){50,50,0};
+		total_elapsed_pos=(vect){50,100,0};
 		elapse_caption_pos=(vect){50,380,0};
 		elapse_pos=(vect){50,430,0};
 		average_caption_pos=(vect){250,380,0};
@@ -243,61 +237,99 @@ public:
 		message_pos=(vect){50,650,0};
 		graphic_laps_caption_pos=(vect){750,20,0};
 		graphic_laps_pos=(vect){750,50,0};
+		user_pos=(vect){550,430,0};
 	}
 	void load_timer_elements()
 	{
 		try
 		{
-			average_caption.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
-			average_caption.set_position(average_pos);
-			average_caption="Average";
-			message.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",50));
-			message.set_position(message_pos);
+			total_elapsed_caption.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
+			total_elapsed_caption.set_color(0,255,0);
+			total_elapsed_caption.set_position(total_elapsed_caption_pos);
+			total_elapsed_caption.set_update_interval(5000);
+			total_elapsed_caption="Total Elapsed";
+
+			total_elapsed.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",35));
+			total_elapsed.set_color(0,255,0);
+			total_elapsed.set_position(total_elapsed_pos);
+			total_elapsed.set_update_interval(20);
+			total_elapsed=0;
+
 
 			elapse_caption.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
 			elapse_caption.set_color(0,255,0);
 			elapse_caption.set_position(elapse_caption_pos);
+			elapse_caption.set_update_interval(5000);
 			elapse_caption="Elapse";
 			elapse.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",35));
 			elapse.set_color(0,255,0);
 			elapse.set_position(elapse_pos);
+			elapse.set_update_interval(20);
 			elapse=0;
 
-			graphic_laps_caption.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",laps_font_size));
+			message.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",50));
+			message.set_update_interval(5000);
+			message.set_position(message_pos);
+
+			graphic_laps_caption.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",laps_font_size));	//this statement is required to pre-load the lap vector's font size into the font pocket...
+			graphic_laps_caption.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
 			graphic_laps_caption.set_color(255,0,0);
 			graphic_laps_caption.set_position(graphic_laps_caption_pos);
+			graphic_laps_caption.set_update_interval(5000);
 			graphic_laps_caption="Laps:";
 
 			average_caption.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
 			average_caption.set_position(average_caption_pos);
+			average_caption.set_update_interval(5000);
 			average_caption.set_color(255,0,0);
 			average_caption="Average";
 			average.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",35));
 			average.set_color(255,0,0);
 			average.set_position(average_pos);
+			average.set_update_interval(20);
 			average=0;
 
+			user.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
+			user.set_position(user_pos);
+			user.set_color(150,150,255);
+
 			toggle.graphic_text->set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
+			toggle.set_color(0,255,0);
 			toggle.graphic_text->set_color(0,0,255);
+			toggle.graphic_text->set_update_interval(5000);
 			*toggle.graphic_text="Start / Stop";
 			toggle.set_dimensions(toggle_pos);
 
 			lap.graphic_text->set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
+			lap.set_color(0,100,255);
 			lap.graphic_text->set_color(255,0,0);
+			lap.graphic_text->set_update_interval(5000);
 			*lap.graphic_text="Lap";
 			lap.set_dimensions(lap_pos);
 
 			target_b.graphic_text->set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",30));
+			target_b.set_color(250,100,0);
+			target_b.graphic_text->set_update_interval(5000);
 			target_b.set_dimensions(target_b_pos,target_b_dim);
 			*target_b.graphic_text="Set Goal";
 
 			save_state.graphic_text->set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",30));
+			save_state.set_color(250,100,0);
+			save_state.graphic_text->set_update_interval(5000);
 			save_state.set_dimensions(save_state_pos,save_state_dim);
 			*save_state.graphic_text="Save";
 
 			load.graphic_text->set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",30));
+			load.set_color(250,100,0);
+			load.graphic_text->set_update_interval(5000);
 			load.set_dimensions(load_pos,load_dim);
 			*load.graphic_text="Load";
+
+			reset_b.graphic_text->set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",30));
+			reset_b.set_color(250,0,0);
+			reset_b.graphic_text->set_update_interval(5000);
+			reset_b.set_dimensions(reset_b_pos,reset_b_dim);
+			*reset_b.graphic_text="Reset";
 		}
 		catch(...)
 		{
@@ -307,10 +339,12 @@ public:
 	}
 	void display_timer_elements()
 	{
-		average_caption.display(1);
-		average.display(1);
-		elapse_caption.display(1);
-		elapse.display(1);
+		average_caption.display();
+		average.display();
+		total_elapsed_caption.display();
+		total_elapsed.display();
+		elapse_caption.display();
+		elapse.display();
 		graphic_laps_caption.display();
 		for(unsigned int i=0;i<graphic_laps.size();i++)
 		{
@@ -320,12 +354,13 @@ public:
 					graphic_laps[i]->display();
 			}
 		}
-		message.display(1);
+		message.display();
 		toggle.display();
 		lap.display();
 		target_b.display();
 		save_state.display();
 		load.display();
+		reset_b.display();
 		user.display();
 	}
 	void overlay_help()
@@ -399,6 +434,16 @@ public:
 		SDL_FillRect(scr,&progress,0xFFCC00);
 		frm.smartwait();
 	}
+	void change_target(unsigned int new_target)
+	{
+		target=new_target;
+		next_alarm=(target*1000+t.elapse())/2;
+		need_target=false;
+	}
+	bool user_completed()
+	{
+		return user.completed();
+	}
 	void handle_mouse_motion()
 	{
 		ms.handle_events(event);
@@ -437,8 +482,9 @@ public:
 		target_b.handle_events(event);
 		save_state.handle_events(event);
 		load.handle_events(event);
+		reset_b.handle_events(event);
 	}
-	void handle_timer_key_events()
+	void key_events()
 	{
 		switch(event.type)
 		{
@@ -446,6 +492,11 @@ public:
 			switch((unsigned int)event.key.keysym.sym)
 			{
 			case SDLK_RETURN:
+				if(user.completed())
+				{
+					target_b.set_color(200,100,0);
+					change_target(atoi(user.get()));
+				}
 				toggle_timer();
 			break;
 			case SDLK_SPACE:
@@ -455,13 +506,30 @@ public:
 		break;
 		}
 	}
+	void handle_GRAPHIC_STRING_INPUT()
+	{
+		if(need_target)
+			user.handle_input(event);
+	}
 	void handle_all_events()
 	{
 		SDL_handle_events();
 		handle_mouse_motion();
 		handle_scrolling();
-		handle_timer_key_events();
 		handle_button_events();
+		handle_GRAPHIC_STRING_INPUT();
+		key_events();
+	}
+	bool alarm_time()
+	{
+		return t.elapse()>next_alarm&&warn.elapse()>750&&t.state()==1;
+	}
+	void play_alarm()
+	{
+		Mix_PlayChannel(-1,beep,0);
+		next_alarm=(target*1000+t.elapse())/2;
+		warn.reset();
+		warn.start();
 	}
 	bool timer_running()
 	{
@@ -470,8 +538,22 @@ public:
 	void toggle_timer()
 	{
 		t.toggle();
+		total_elapse.toggle();
 		if(beat_z)
 			Mix_PlayChannel(-1,beat_z,0);
+	}
+	void clear_laps()
+	{
+		laps.clear();
+		for(unsigned int i=0;i<graphic_laps.size();i++)
+		{
+			if(graphic_laps[i])
+			{
+				delete graphic_laps[i];
+				graphic_laps[i]=NULL;
+			}
+		}
+		graphic_laps.clear();
 	}
 	void lap_timer()
 	{
@@ -485,6 +567,7 @@ public:
 			GRAPHIC_STRING* temp=graphic_laps[graphic_laps.size()-1];
 			temp->set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",laps_font_size));
 			temp->set_color(255,255,255);
+			temp->set_update_interval(5000);
 			string contents;
 			char U[10];
 			sprintf(U,"%-4i",laps.size());
@@ -504,13 +587,15 @@ public:
 	void reset_stats()
 	{
 		avg=0;
-		laps.clear();
+		clear_laps();
 		t.reset();
+		total_elapse.reset();
 		target=60;
 	}
 	void process_timer_stats()
 	{
 		elapse.set((int)t.elapse()/1000.0,"%8.3f");
+		total_elapsed.set((int)total_elapse.elapse()/1000.0,"%8.3f");
 		if(target!=0)
 			lap_progress=((double)t.elapse()/(target*1000.0));
 		else
@@ -522,27 +607,18 @@ public:
 	void save_to_file()
 	{
 		ofstream fout("Data/save.txt");
-		fout<<target<<' '<<t.elapse()<<' ';
+		fout<<target<<' '<<t.elapse()<<' '<<total_elapse.elapse()<<' ';
 		for(unsigned int i=0;i<laps.size();i++)
 			fout<<laps[i]<<' ';
 		fout.close();
 	}
 	void load_from_file()
 	{
-		avg=0;
-		laps.clear();
-		for(unsigned int i=0;i<graphic_laps.size();i++)
-		{
-			if(graphic_laps[i])
-			{
-				delete graphic_laps[i];
-				graphic_laps[i]=NULL;
-			}
-		}
-		graphic_laps.clear();
+		reset_stats();
 		ifstream fin("Data/save.txt");
+		unsigned int total_elapsed;
 		float temp=0;
-		fin>>target>>temp;
+		fin>>target>>temp>>total_elapsed;
 		t.set(temp);
 		while(fin>>temp)
 		{
@@ -554,6 +630,7 @@ public:
 			{
 				p->set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",laps_font_size));
 				p->set_color(255,255,255);
+				p->set_update_interval(5000);
 				string contents;
 				char U[10];
 				sprintf(U,"%-4i",laps.size());
@@ -574,9 +651,30 @@ public:
 		need_target=Need_Target;
 		user.finished(false);
 	}
+	bool set_message_time()
+	{
+		return mesaage_update.elapse()>1000&&first_timer.elapse()>5000&&t.state()==1;
+	}
+	void set_message()
+	{
+		if(avg>target)
+		{
+			message.set_color(255,0,0);
+			message="Hurry up!";
+		}
+		else
+		{
+			message.set_color(0,255,0);
+			message="You are doing good!";
+		}
+		mesaage_update.reset();
+		mesaage_update.start();
+	}
 	STUDY_TIMER(vect screen_dimensions,const char* default_font_location,unsigned int default_font_size)
 	:
 		SDL(SDL_SetVideoMode(screen_dimensions.x,screen_dimensions.y,screen_dimensions.z,SDL_SWSURFACE)),
+		total_elapsed_caption(scr),
+		total_elapsed(scr),
 		elapse_caption(scr),
 		elapse(scr),
 		laptime(scr),
@@ -591,16 +689,18 @@ public:
 		target_b(scr),
 		save_state(scr),
 		load(scr),
+		reset_b(scr),
 		font_pocket(FONT(default_font_location,default_font_size))
 	{
 		avg=0;
 		target=60;
+		next_alarm=target/2;
 		laps_font_size=20;
 		scroll_position=0;
-		next_alarm=target/2;
 		scrdim=screen_dimensions;
 		First_run=Firstrun_file_status();
-		need_target=false;
+		set_need_target(false);
+		runtimer.start();warn.start();mesaage_update.start();first_timer.start();
 		beat=Mix_LoadWAV("audio/Beat.wav");
 		beat_z=Mix_LoadWAV("audio/Beat z.wav");
 		beep=Mix_LoadWAV("audio/beep.wav");
