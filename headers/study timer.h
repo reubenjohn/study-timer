@@ -67,11 +67,12 @@ public:
 		SDL_Event e;
 		while(!quit&&T.elapse()<pause_time)
 		{
-			if(SDL_WaitEvent(&e))
+			if(SDL_PollEvent(&e))
 			{
 				if(e.type==SDL_QUIT)
 					quit=true;
 			}
+			SDL_Delay(1);
 		}
 	}
 	int poll_event()
@@ -107,7 +108,7 @@ class STUDY_TIMER:public SDL
 	vect scrdim;
 	framer frm;
 	timer runtimer,first_timer,t,warn,mesaage_update,total_elapse;
-	Mix_Chunk *beat,*beat_z,*beep;
+	Mix_Chunk *beat,*beat_z,*beep,*ding,*kaching,*scratch,*blast;
 	SDL_Rect progress;
 	GRAPHIC_STRING total_elapsed_caption,total_elapsed,elapse_caption,elapse,laptime,average_caption,average,misc,message;
 	vect study_timer_pos,total_elapsed_caption_pos,total_elapsed_pos,elapse_caption_pos,elapse_pos,laptime_pos,average_caption_pos,average_pos,message_pos;
@@ -236,8 +237,8 @@ public:
 		laptime_pos=(vect){30,430,0};
 		average_caption_pos=(vect){260,380,0};
 		message_pos=(vect){50,650,0};
-		graphic_laps_caption_pos=(vect){750,20,0};
-		graphic_laps_pos=(vect){750,50,0};
+		graphic_laps_caption_pos=(vect){650,20,0};
+		graphic_laps_pos=(vect){650,50,0};
 		user_pos=(vect){550,430,0};
 	}
 	void load_timer_elements()
@@ -427,6 +428,10 @@ public:
 	{
 		toggle.refresh();
 		lap.refresh();
+		target_b.refresh();
+		save_state.refresh();
+		load.refresh();
+		reset_b.refresh();
 	}
 	void terminate_frame()
 	{
@@ -625,6 +630,9 @@ public:
 	}
 	void reset_stats()
 	{
+		if(blast)
+			Mix_PlayChannel(-1,blast,0);
+		message="Nothing to say";
 		avg=0;
 		clear_laps();
 		t.reset();
@@ -650,6 +658,8 @@ public:
 		for(unsigned int i=0;i<laps.size();i++)
 			fout<<laps[i]<<' ';
 		fout.close();
+		if(kaching)
+			Mix_PlayChannel(-1,kaching,0);
 	}
 	void load_from_file()
 	{
@@ -658,6 +668,7 @@ public:
 		unsigned int total_elapsed;
 		float temp=0;
 		fin>>target>>temp>>total_elapsed;
+		total_elapse.set(total_elapsed);
 		t.set(temp);
 		while(fin>>temp)
 		{
@@ -680,6 +691,8 @@ public:
 				*p=contents;
 			}
 		}
+		if(scratch)
+			Mix_PlayChannel(-1,scratch,0);
 		scroll_position=0;
 		refresh_lap_positions();
 		if(laps.size()>0)
@@ -703,6 +716,9 @@ public:
 		}
 		else
 		{
+			if(message!="You are doing good!")
+				if(ding)
+					Mix_PlayChannel(-1,ding,0);
 			message.set_color(0,255,0);
 			message="You are doing good!";
 		}
@@ -742,9 +758,13 @@ public:
 		set_need_target(false);
 		mouse_lock=false;
 		runtimer.start();warn.start();mesaage_update.start();first_timer.start();
+		kaching=Mix_LoadWAV("audio/kaching.wav");
 		beat=Mix_LoadWAV("audio/Beat.wav");
 		beat_z=Mix_LoadWAV("audio/Beat z.wav");
 		beep=Mix_LoadWAV("audio/beep.wav");
+		ding=Mix_LoadWAV("audio/DING.WAV");
+		scratch=Mix_LoadWAV("audio/scratch.wav");
+		blast=Mix_LoadWAV("audio/Blast.wav");
 		SDL_FillRect(scr,&scr->clip_rect,0x8800DD);
 		update();
 
@@ -766,7 +786,7 @@ public:
 		study_timer.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
 		study_timer.set_position(study_timer_pos);
 		study_timer.display();
-		SDL_Flip(scr);
+		update();
 		pause(1000);
 		progress=scr->clip_rect;
 		load_timer_elements();
@@ -801,6 +821,27 @@ public:
 			Mix_FreeChunk(beep);
 			fout.open("logs/allocation log.txt",ios::app);
 			fout<<"Freed beep\n";
+			fout.close();
+		}
+		if(ding)
+		{
+			Mix_FreeChunk(ding);
+			fout.open("logs/allocation log.txt",ios::app);
+			fout<<"Freed ding\n";
+			fout.close();
+		}
+		if(scratch)
+		{
+			Mix_FreeChunk(scratch);
+			fout.open("logs/allocation log.txt",ios::app);
+			fout<<"Freed scratch\n";
+			fout.close();
+		}
+		if(blast)
+		{
+			Mix_FreeChunk(blast);
+			fout.open("logs/allocation log.txt",ios::app);
+			fout<<"Freed blast\n";
 			fout.close();
 		}
 		SDL_FreeSurface(scr);
