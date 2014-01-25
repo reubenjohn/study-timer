@@ -99,8 +99,9 @@ public:
 
 class STUDY_TIMER:public SDL
 {
-	bool First_run,need_target;
+	bool First_run,need_target,mouse_lock;
 	unsigned int next_alarm,laps_font_size,scroll_position;
+	Uint32 background_col;
 	vector<float> laps;
 	float avg,target,lap_progress;
 	vect scrdim;
@@ -430,9 +431,24 @@ public:
 	void terminate_frame()
 	{
 		update();
-		SDL_FillRect(scr,&scr->clip_rect,0x009999);
+		SDL_FillRect(scr,&scr->clip_rect,background_col);
 		SDL_FillRect(scr,&progress,0xFFCC00);
 		frm.smartwait();
+	}
+	void toggle_mouse_lock()
+	{
+		if(mouse_lock)
+			mouse_lock=false;
+		else
+			mouse_lock=true;
+		if(mouse_lock)
+		{
+			background_col=0x005555;
+		}
+		else
+		{
+			background_col=0x009999;
+		}
 	}
 	void change_target(unsigned int new_target)
 	{
@@ -447,6 +463,21 @@ public:
 	void handle_mouse_motion()
 	{
 		ms.handle_events(event);
+	}
+	void handle_mouse_locks()
+	{
+		switch(event.type)
+		{
+		case SDL_MOUSEBUTTONDOWN:
+			switch(event.button.button)
+			{
+			case SDL_BUTTON_LEFT:
+				if(mouse_lock)
+					lap_timer();
+			break;
+			}
+		break;
+		}
 	}
 	void refresh_lap_positions()
 	{
@@ -477,20 +508,27 @@ public:
 	}
 	void handle_button_events()
 	{
-		toggle.handle_events(event);
-		lap.handle_events(event);
-		target_b.handle_events(event);
-		save_state.handle_events(event);
-		load.handle_events(event);
-		reset_b.handle_events(event);
+		if(!mouse_lock)
+		{
+			toggle.handle_events(event);
+			lap.handle_events(event);
+			target_b.handle_events(event);
+			save_state.handle_events(event);
+			load.handle_events(event);
+			reset_b.handle_events(event);
+		}
 	}
-	void key_events()
+	void handle_key_events()
 	{
 		switch(event.type)
 		{
 		case SDL_KEYDOWN:
 			switch((unsigned int)event.key.keysym.sym)
 			{
+			case SDLK_RALT:
+			case SDLK_LALT:
+				toggle_mouse_lock();
+			break;
 			case SDLK_RETURN:
 				if(user.completed())
 				{
@@ -518,7 +556,8 @@ public:
 		handle_scrolling();
 		handle_button_events();
 		handle_GRAPHIC_STRING_INPUT();
-		key_events();
+		handle_key_events();
+		handle_mouse_locks();
 	}
 	bool alarm_time()
 	{
@@ -699,7 +738,9 @@ public:
 		scroll_position=0;
 		scrdim=screen_dimensions;
 		First_run=Firstrun_file_status();
+		background_col=0x009999;
 		set_need_target(false);
+		mouse_lock=false;
 		runtimer.start();warn.start();mesaage_update.start();first_timer.start();
 		beat=Mix_LoadWAV("audio/Beat.wav");
 		beat_z=Mix_LoadWAV("audio/Beat z.wav");
