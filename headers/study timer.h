@@ -108,14 +108,14 @@ class STUDY_TIMER:public SDL
 	vect scrdim;
 	framer frm;
 	timer runtimer,first_timer,t,warn,mesaage_update,total_elapse;
-	Mix_Chunk *beat,*beat_z,*beep,*ding,*kaching,*scratch,*blast;
+	Mix_Chunk *beat,*beat_z,*beep,*ding,*kaching,*punch,*blast,*buzz;
 	SDL_Rect progress;
 	GRAPHIC_STRING total_elapsed_caption,total_elapsed,elapse_caption,elapse,laptime,average_caption,average,misc,message;
 	vect study_timer_pos,total_elapsed_caption_pos,total_elapsed_pos,elapse_caption_pos,elapse_pos,laptime_pos,average_caption_pos,average_pos,message_pos;
-	vect lap_pos,lap_dim,toggle_pos,target_b_pos,target_b_dim,save_state_pos,save_state_dim,load_pos,load_dim,reset_b_pos,reset_b_dim;
-	GRAPHIC_STRING graphic_laps_caption;
+	vect lap_pos,lap_dim,toggle_pos,toggle_dim,target_b_pos,target_b_dim,save_state_pos,save_state_dim,load_pos,load_dim,reset_b_pos,reset_b_dim;
+	GRAPHIC_STRING graphic_laps_caption,goal_time_caption;
 	vector<GRAPHIC_STRING*> graphic_laps;
-	vect graphic_laps_caption_pos,graphic_laps_pos;
+	vect graphic_laps_caption_pos,graphic_laps_pos,goal_time_caption_pos;
 	GRAPHIC_STRING_INPUT user;
 	vect user_pos;
 	mouse ms;
@@ -215,31 +215,33 @@ public:
 	}
 	void load_timer_element_positions(vect screen_dimensions)
 	{
+		progress.w=scrdim.x;
 		study_timer_pos=screen_dimensions*0.4;
-		toggle_pos=(vect){50,200,0};
-		target_b_pos=(vect){900,50,0};
-		target_b_dim=(vect){200,50,0};
-		save_state_pos=(vect){900,150,0};
-		save_state_dim=(vect){200,50,0};
-		save_state_pos=(vect){900,150,0};
-		save_state_dim=(vect){200,50,0};
-		load_pos=(vect){900,250,0};
-		load_dim=(vect){200,50,0};
-		reset_b_pos=(vect){900,450,0};
-		reset_b_dim=(vect){200,100,0};
-		total_elapsed_caption_pos=(vect){50,50,0};
-		total_elapsed_pos=(vect){50,100,0};
-		elapse_caption_pos=(vect){50,380,0};
-		elapse_pos=(vect){50,430,0};
-		average_caption_pos=(vect){250,380,0};
-		average_pos=(vect){250,430,0};
-		lap_pos=(vect){50,500,0};
+		target_b_dim=(vect){scrdim.x/5,scrdim.y/15,0};
+		target_b_pos=(vect){scrdim.x-target_b_dim.x,scrdim.y/22,0};
+		vect RHS_button_spacing=(vect){0,scrdim.y/7,0};
+		save_state_dim=target_b_dim;
+		save_state_pos=target_b_pos+RHS_button_spacing;
+		load_dim=target_b_dim;
+		load_pos=save_state_pos+RHS_button_spacing;
+		reset_b_dim=(vect){target_b_dim.x,target_b_dim.y*2,0};
+		reset_b_pos=load_pos+2*RHS_button_spacing;
+		total_elapsed_caption_pos=scrdim/22;
+		total_elapsed_pos=total_elapsed_caption_pos+(vect){scrdim.x/22,scrdim.y/15,0};
+		toggle_dim=(vect){scrdim.x*0.38,scrdim.y*0.15,0};
+		toggle_pos=(vect){scrdim.x/22,scrdim.y/3,0};
+		lap_dim=toggle_dim;
+		lap_pos=toggle_pos+(vect){0,scrdim.y/3,0};
+		elapse_caption_pos=(vect){scrdim.x/16,scrdim.y*0.53,0};
+		elapse_pos=elapse_caption_pos+(vect){0,scrdim.y/15,0};
+		average_caption_pos=elapse_caption_pos+(vect){scrdim.x*0.18,0,0};
+		average_pos=average_caption_pos+(vect){scrdim.x/100,scrdim.y/15,0};
 		laptime_pos=(vect){30,430,0};
-		average_caption_pos=(vect){260,380,0};
-		message_pos=(vect){50,650,0};
-		graphic_laps_caption_pos=(vect){650,20,0};
-		graphic_laps_pos=(vect){650,50,0};
-		user_pos=(vect){550,430,0};
+		message_pos=(vect){scrdim.x/22,scrdim.y*0.9,0};
+		graphic_laps_caption_pos=(vect){scrdim.x*0.6,scrdim.y/34,0};
+		graphic_laps_pos=graphic_laps_caption_pos+(vect){0,scrdim.y/25,0};
+		goal_time_caption_pos=total_elapsed_caption_pos+(vect){scrdim.x*0.3,0,0};
+		user_pos=goal_time_caption_pos+(vect){scrdim.x/22,scrdim.y/15,0};
 	}
 	void load_timer_elements()
 	{
@@ -267,7 +269,7 @@ public:
 			elapse.set_color(0,255,0);
 			elapse.set_position(elapse_pos);
 			elapse.set_update_interval(20);
-			elapse=0;
+			elapse.set(0,"%-8.3");
 
 			message.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",50));
 			message.set_update_interval(5000);
@@ -291,9 +293,16 @@ public:
 			average.set_update_interval(20);
 			average=0;
 
+			goal_time_caption.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
+			goal_time_caption.set_position(goal_time_caption_pos);
+			goal_time_caption.set_update_interval(5000);
+			goal_time_caption.set_color(150,150,255);
+			goal_time_caption="Goal Time";
+
 			user.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
 			user.set_position(user_pos);
 			user.set_color(150,150,255);
+			user.set(60);
 
 			toggle.graphic_text->set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
 			toggle.set_color(0,255,0);
@@ -363,6 +372,7 @@ public:
 		save_state.display();
 		load.display();
 		reset_b.display();
+		goal_time_caption.display();
 		user.display();
 	}
 	void overlay_help()
@@ -457,9 +467,11 @@ public:
 	}
 	void change_target(unsigned int new_target)
 	{
+		target_b.set_color(200,100,0);
 		target=new_target;
 		next_alarm=(target*1000+t.elapse())/2;
-		need_target=false;
+		set_need_target(false);
+		user.set(target,"%-8.0f");
 	}
 	bool user_completed()
 	{
@@ -537,7 +549,6 @@ public:
 			case SDLK_RETURN:
 				if(user.completed())
 				{
-					target_b.set_color(200,100,0);
 					change_target(atoi(user.get()));
 				}
 				toggle_timer();
@@ -557,6 +568,7 @@ public:
 	void handle_all_events()
 	{
 		SDL_handle_events();
+		handle_window_resizing();
 		handle_mouse_motion();
 		handle_scrolling();
 		handle_button_events();
@@ -628,9 +640,9 @@ public:
 		t.start();
 		next_alarm=target*1000/2;
 	}
-	void reset_stats()
+	void reset_stats(bool quietly=false)
 	{
-		if(blast)
+		if(blast&&!quietly)
 			Mix_PlayChannel(-1,blast,0);
 		message="Nothing to say";
 		avg=0;
@@ -641,7 +653,7 @@ public:
 	}
 	void process_timer_stats()
 	{
-		elapse.set((int)t.elapse()/1000.0,"%8.3f");
+		elapse.set((int)t.elapse()/1000.0,"%-8.3f");
 		total_elapsed.set((int)total_elapse.elapse()/1000.0,"%8.3f");
 		if(target!=0)
 			lap_progress=((double)t.elapse()/(target*1000.0));
@@ -649,7 +661,7 @@ public:
 			lap_progress=0;
 		progress.h=scr->clip_rect.h*lap_progress;
 		progress.y=scr->clip_rect.h-progress.h;
-		average.set((avg*laps.size()+t.elapse()/1000.f)/(laps.size()+1),"%8.3f");
+		average.set((avg*laps.size()+t.elapse()/1000.f)/(laps.size()+1),"%-8.3f");
 	}
 	void save_to_file()
 	{
@@ -663,7 +675,7 @@ public:
 	}
 	void load_from_file()
 	{
-		reset_stats();
+		reset_stats(1);
 		ifstream fin("Data/save.txt");
 		unsigned int total_elapsed;
 		float temp=0;
@@ -691,8 +703,8 @@ public:
 				*p=contents;
 			}
 		}
-		if(scratch)
-			Mix_PlayChannel(-1,scratch,0);
+		if(punch)
+			Mix_PlayChannel(-1,punch,0);
 		scroll_position=0;
 		refresh_lap_positions();
 		if(laps.size()>0)
@@ -703,7 +715,7 @@ public:
 		need_target=Need_Target;
 		user.finished(false);
 	}
-	bool set_message_time()
+	bool message_time()
 	{
 		return mesaage_update.elapse()>1000&&first_timer.elapse()>5000&&t.state()==1;
 	}
@@ -711,8 +723,12 @@ public:
 	{
 		if(avg>target)
 		{
+			if(message!="Hurry up!")
+				if(buzz)
+					Mix_PlayChannel(-1,buzz,1);
 			message.set_color(255,0,0);
 			message="Hurry up!";
+			message.render_image(1);
 		}
 		else
 		{
@@ -721,13 +737,38 @@ public:
 					Mix_PlayChannel(-1,ding,0);
 			message.set_color(0,255,0);
 			message="You are doing good!";
+			message.render_image(1);
 		}
 		mesaage_update.reset();
 		mesaage_update.start();
 	}
+	bool handle_window_resizing()
+	{
+		if( event.type == SDL_VIDEORESIZE )
+		{
+			scr = SDL_SetVideoMode( event.resize.w, event.resize.h, scrdim.z, SDL_SWSURFACE | SDL_RESIZABLE );
+			if(scr)
+			{
+				scrdim.x=event.resize.w;
+				scrdim.y=event.resize.h;
+				resize_window(scrdim);
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+		return -1;
+	}
+	void resize_window(vect new_screen_dimensions)
+	{
+		load_timer_element_positions(new_screen_dimensions);
+		load_timer_elements();
+	}
 	STUDY_TIMER(vect screen_dimensions,const char* default_font_location,unsigned int default_font_size)
 	:
-		SDL(SDL_SetVideoMode(screen_dimensions.x,screen_dimensions.y,screen_dimensions.z,SDL_SWSURFACE)),
+		SDL(SDL_SetVideoMode(screen_dimensions.x,screen_dimensions.y,screen_dimensions.z,SDL_SWSURFACE|SDL_RESIZABLE)),
 		total_elapsed_caption(scr),
 		total_elapsed(scr),
 		elapse_caption(scr),
@@ -738,6 +779,7 @@ public:
 		misc(scr),
 		message(scr),
 		graphic_laps_caption(scr),
+		goal_time_caption(scr),
 		user(scr),
 		toggle(scr),
 		lap(scr),
@@ -748,14 +790,13 @@ public:
 		font_pocket(FONT(default_font_location,default_font_size))
 	{
 		avg=0;
-		target=60;
 		next_alarm=target/2;
 		laps_font_size=20;
 		scroll_position=0;
 		scrdim=screen_dimensions;
 		First_run=Firstrun_file_status();
 		background_col=0x009999;
-		set_need_target(false);
+		change_target(60);
 		mouse_lock=false;
 		runtimer.start();warn.start();mesaage_update.start();first_timer.start();
 		kaching=Mix_LoadWAV("audio/kaching.wav");
@@ -763,8 +804,9 @@ public:
 		beat_z=Mix_LoadWAV("audio/Beat z.wav");
 		beep=Mix_LoadWAV("audio/beep.wav");
 		ding=Mix_LoadWAV("audio/DING.WAV");
-		scratch=Mix_LoadWAV("audio/scratch.wav");
+		punch=Mix_LoadWAV("audio/punch.wav");
 		blast=Mix_LoadWAV("audio/Blast.wav");
+		buzz=Mix_LoadWAV("audio/bad_buzz_distorted.wav");
 		SDL_FillRect(scr,&scr->clip_rect,0x8800DD);
 		update();
 
@@ -830,11 +872,11 @@ public:
 			fout<<"Freed ding\n";
 			fout.close();
 		}
-		if(scratch)
+		if(punch)
 		{
-			Mix_FreeChunk(scratch);
+			Mix_FreeChunk(punch);
 			fout.open("logs/allocation log.txt",ios::app);
-			fout<<"Freed scratch\n";
+			fout<<"Freed punch\n";
 			fout.close();
 		}
 		if(blast)

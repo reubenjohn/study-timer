@@ -123,7 +123,7 @@ int main(int argc,char* args[])
 		{
 			T.play_alarm();
 		}
-		if(T.set_message_time())
+		if(T.message_time())
 		{
 			T.set_message();
 		}
