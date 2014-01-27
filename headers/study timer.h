@@ -428,6 +428,7 @@ public:
 		load.display();
 		user.display();
 
+		update();
 		wait();
 	}
 	void updatefpslimits(double min_fps,double max_fps)
