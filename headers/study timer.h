@@ -674,6 +674,7 @@ public:
 		avg+=laps[laps.size()-1]/laps.size();
 		t.reset();
 		t.start();
+		total_elapse.start();
 		next_alarm=target*1000/2;
 	}
 	void reset_stats(bool quietly=false)
