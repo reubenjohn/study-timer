@@ -7,27 +7,31 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_mixer.h>
-#include <physim/headers/framer.hpp>
-#include <physim/headers/vect.hpp>
-#include <aria/headers/global_assets.hpp>
-#include <headers/button.hpp>
-#include <headers/mouse.hpp>
 #include <string>
 #include <vector>
 #include <fstream>
 #include <SDL/SDL_ttf.h>
 #include <windows.h>
+#include <ctime>
 
+#include <physim/headers/framer.hpp>
+#include <physim/headers/vect.hpp>
+#include <aria/headers/global_assets.hpp>
+#include <headers/button.hpp>
+#include <headers/mouse.hpp>
+
+using namespace std;
 class SDL
 {
 public:
 	SDL_Surface* scr;
 	SDL_Event event;
 	HWND hwnd;
-	bool quit;
+	bool quit,windowed;
 	SDL(SDL_Surface* screen)
 	{
 		quit=false;
+		windowed=true;
 		hwnd=FindWindowA("ConsoleWindowClass",NULL);
 		ShowWindow(hwnd,false);
 		SDL_Init(SDL_INIT_EVERYTHING);
@@ -94,6 +98,35 @@ public:
 	{
 		if(scr)
 			SDL_Flip(scr);
+	}
+	bool toggle_fullscreen(vect screen_dimensions)
+	{
+	    if( windowed == true )
+	    {
+	        scr = SDL_SetVideoMode( screen_dimensions.x, screen_dimensions.y, screen_dimensions.z, SDL_SWSURFACE | SDL_RESIZABLE | SDL_FULLSCREEN );
+
+	        if(scr)
+	        {
+	        	return windowed = false;
+	        }
+	        else
+	        {
+	        	return false;
+	        }
+	    }
+	    else
+	    {
+	    	scr = SDL_SetVideoMode( screen_dimensions.x, screen_dimensions.y , screen_dimensions.z, SDL_SWSURFACE | SDL_RESIZABLE );
+	        if(scr)
+	        {
+	        	return windowed = true;
+	        }
+	        else
+	        {
+	        	return false;
+	        }
+	    }
+	    return false;
 	}
 };
 #define stop___ {bool stop=false;while(!stop){if(SDL_WaitEvent(&event))if(event.type==SDL_KEYDOWN||event.type==SDL_QUIT){stop=true;if(event.type==SDL_QUIT)ended=true;}}}
@@ -241,6 +274,7 @@ public:
 		message_pos=(vect){scrdim.x/22,scrdim.y*0.9,0};
 		graphic_laps_caption_pos=(vect){scrdim.x*0.6,scrdim.y/34,0};
 		graphic_laps_pos=graphic_laps_caption_pos+(vect){0,scrdim.y/25,0};
+		refresh_lap_positions();
 		goal_time_caption_pos=total_elapsed_caption_pos+(vect){scrdim.x*0.3,0,0};
 		user_pos=goal_time_caption_pos+(vect){scrdim.x/22,scrdim.y/15,0};
 	}
@@ -283,6 +317,11 @@ public:
 			graphic_laps_caption.set_position(graphic_laps_caption_pos);
 			graphic_laps_caption.set_update_interval(5000);
 			graphic_laps_caption="Laps:";
+
+			if(!graphic_laps.empty())
+			{
+				refresh_lap_positions();
+			}
 
 			average_caption.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
 			average_caption.set_position(average_caption_pos);
@@ -488,10 +527,15 @@ public:
 	}
 	void toggle_mouse_lock()
 	{
+		toggle_fullscreen(scrdim);
 		if(mouse_lock)
+		{
 			mouse_lock=false;
+		}
 		else
+		{
 			mouse_lock=true;
+		}
 		if(mouse_lock)
 		{
 			background_col=0x005555;
@@ -578,8 +622,7 @@ public:
 		case SDL_KEYDOWN:
 			switch((unsigned int)event.key.keysym.sym)
 			{
-			case SDLK_RALT:
-			case SDLK_LALT:
+			case SDLK_ESCAPE:
 				toggle_mouse_lock();
 			break;
 			case SDLK_RETURN:
@@ -652,7 +695,7 @@ public:
 		if(beat)
 			Mix_PlayChannel(-1,beat,0);
 		avg*=laps.size();
-		laps.push_back(t.elapse()/1000.f);
+		laps.push_back(t.elapse());
 		graphic_laps.push_back(new GRAPHIC_STRING(scr));
 		if(graphic_laps[graphic_laps.size()-1])
 		{
@@ -686,19 +729,18 @@ public:
 		clear_laps();
 		t.reset();
 		total_elapse.reset();
-		target=60;
 	}
 	void process_timer_stats()
 	{
-		elapse.set((int)t.elapse()/1000.0,"%-8.3f");
-		total_elapsed.set((int)total_elapse.elapse()/1000.0,"%8.3f");
+		elapse.set_time((int)t.elapse());
+		total_elapsed.set_time((int)total_elapse.elapse());
 		if(target!=0)
 			lap_progress=((double)t.elapse()/(target*1000.0));
 		else
 			lap_progress=0;
 		progress.h=scr->clip_rect.h*lap_progress;
 		progress.y=scr->clip_rect.h-progress.h;
-		average.set((avg*laps.size()+t.elapse()/1000.f)/(laps.size()+1),"%-8.3f");
+		average.set_time((avg*laps.size()+t.elapse())/(laps.size()+1));
 	}
 	void save_to_file()
 	{
@@ -719,6 +761,7 @@ public:
 		fin>>target>>temp>>total_elapsed;
 		total_elapse.set(total_elapsed);
 		t.set(temp);
+		user.set((double)target,"%3.0f");
 		while(fin>>temp)
 		{
 			laps.push_back(temp);
