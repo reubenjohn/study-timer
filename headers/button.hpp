@@ -64,7 +64,7 @@ public:
 	{
 		color=SDL_MapRGB(scr-> format,r,g,b);
 	}
-	void display()
+	void display(bool force=false)
 	{
 		if(scr)
 			SDL_FillRect(scr,&rect,color);
@@ -75,7 +75,7 @@ public:
 			fout.close();
 		}
 		if(graphic_text)
-			graphic_text->display();
+			graphic_text->display(force);
 		else
 		{
 			ofstream fout("logs/allocation log.txt",ios::app);

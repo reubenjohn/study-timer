@@ -192,6 +192,7 @@ public:
 		update();
 		try
 		{
+			load_timer_element_positions(scrdim);
 			load_timer_elements();
 			overlay_help();
 			update();
@@ -265,11 +266,12 @@ public:
 			elapse_caption.set_position(elapse_caption_pos);
 			elapse_caption.set_update_interval(5000);
 			elapse_caption="Elapse";
+
 			elapse.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",35));
 			elapse.set_color(0,255,0);
 			elapse.set_position(elapse_pos);
 			elapse.set_update_interval(20);
-			elapse.set(0,"%-8.3");
+			elapse.set(0,"%8.3");
 
 			message.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",50));
 			message.set_update_interval(5000);
@@ -348,88 +350,121 @@ public:
 			wait();
 		}
 	}
-	void display_timer_elements()
+	void display_timer_elements(bool force=false)
 	{
-		average_caption.display();
-		average.display();
-		total_elapsed_caption.display();
-		total_elapsed.display();
-		elapse_caption.display();
-		elapse.display();
-		graphic_laps_caption.display();
+		average_caption.display(force);
+		average.display(force);
+		total_elapsed_caption.display(force);
+		total_elapsed.display(force);
+		elapse_caption.display(force);
+		elapse.display(force);
+		graphic_laps_caption.display(force);
 		for(unsigned int i=0;i<graphic_laps.size();i++)
 		{
 			if(graphic_laps[i])
 			{
 				if(graphic_laps[i]->rectangle().y>0)
-					graphic_laps[i]->display();
+					graphic_laps[i]->display(force);
 			}
 		}
-		message.display();
-		toggle.display();
-		lap.display();
-		target_b.display();
-		save_state.display();
-		load.display();
-		reset_b.display();
-		goal_time_caption.display();
-		user.display();
+		message.display(force);
+		toggle.display(force);
+		lap.display(force);
+		target_b.display(force);
+		save_state.display(force);
+		load.display(force);
+		reset_b.display(force);
+		goal_time_caption.display(force);
+		user.display(force);
 	}
 	void overlay_help()
 	{
-		SDL_FillRect(scr,&scr->clip_rect,0x0066EE);
+		SDL_FillRect(scr,&scr->clip_rect,0x0088EE);
+		message="New messages will pop up here!";
+
 		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",30));
 		misc.set_color(70,220,255);
-		misc.set_position(10,150);
 		misc="(Start/Stop the current lap time)";
-		misc.display(1);
-		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",25));
-		misc.set_color(255,255,0);
-		misc.set_position(900-380,150+10);
-		misc="Save the current timer state->";
-		misc.display(1);
-		misc.set_position(900-420,225+40);
-		misc="Load a previous timer state->";
+		misc.render_image(1);
+		misc.set_position(toggle_pos+(vect){0,-(long double)misc.rectangle().h,0});
 		misc.display();
-		misc.set_position(900-400,150+40);
+
+		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",30));
+		misc.set_color(70,220,255);
+		misc="(Lap the current lap time)";
+		misc.render_image(1);
+		misc.set_position(lap_pos+(vect){0,lap_dim.y,0});
+		misc.display();
+
+		misc.set_color(255,255,0);
+
+		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",20));
+		misc="Set time you want to take to finish a lap";
+		misc.render_image(1);
+		misc.set_position(target_b_pos+(vect){-(long double)(misc.rectangle().w)+target_b_dim.x,target_b_dim.y,0});
+		misc.display();
+
+		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",20));
+		misc="Save the current timer state";
+		misc.render_image(1);
+		misc.set_position(save_state_pos+(vect){-(long double)(misc.rectangle().w)+save_state_dim.x,save_state_dim.y,0});
+		misc.display();
+
+		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",20));
 		misc="Replaces any previous saves!";
-		misc.display(1);
+		misc.render_image(1);
+		misc.set_position(save_state_pos+(vect){-(long double)(misc.rectangle().w)+save_state_dim.x,save_state_dim.y+20,0});
+		misc.display();
+
+		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",20));
+		misc="Load a previous timer state";
+		misc.render_image(1);
+		misc.set_position(load_pos+(vect){-(long double)(misc.rectangle().w)+load_dim.x,load_dim.y,0});
+		misc.display();
+
+		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",20));
+		misc="Resets all timer statistics";
+		misc.render_image(1);
+		misc.set_position(reset_b_pos+(vect){-(long double)(misc.rectangle().w)+reset_b_dim.x,reset_b_dim.y,0});
+		misc.display();
+
 		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",30));
-		misc.set_position(70,60);
-		misc="Set your goal (Time you want to take to finish a lap)->";
-		misc.display(1);
-		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",28));
-		misc.set_position(500,550);
 		misc="Tap any key to continue";
-		misc.display(1);
-		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",28));
-		misc.set_color(255,0,0);
-		misc.set_position(450,380+20);
-		misc="<- Shows the average of all your laps";
-		misc.display(1);
-		misc.set_position(0,380-50);
-		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",30));
-		misc.set_color(0,255,0);
-		misc="(Time you took for current lap)";
-		misc.display(1);
+		misc.render_image(1);
+		misc.set_position(scrdim.x/2,scrdim.y*0.8);
+		misc.display();
 
-		elapse_caption.display(1);
-		elapse.display(1);
+		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",20));
+		misc="Time taken for current lap";
+		misc.render_image(1);
+		misc.set_position(0,elapse_caption_pos.y-misc.rectangle().h);
+		misc.display();
 
-		average_caption.display(1);
-		average.display(1);
+		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",20));
+		misc="Shows the average of all your laps";
+		misc.render_image(1);
+		misc.set_position(average_caption_pos+(vect){(long double)average_caption.rectangle().w/2+30,-(long double)misc.rectangle().h,0});
+		misc.display();
 
-		message="Welcome! New messages will pop up here";
-		message.display(1);
-		toggle.display();
-		lap.display();
-		target_b.display();
-		save_state.display();
-		load.display();
-		user.display();
+		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",20));
+		misc="Total time you spent studying";
+		misc.render_image(1);
+		misc.set_position(0,total_elapsed_caption_pos.y-misc.rectangle().h);
+		misc.display();
 
-		update();
-		wait();
+		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",20));
+		misc="Currently set goal time";
+		misc.render_image(1);
+		misc.set_position(goal_time_caption_pos+(vect){0,-(long double)misc.rectangle().h,0});
+		misc.display();
+
+		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",20));
+		misc="List of all laps made";
+		misc.render_image(1);
+		misc.set_position(graphic_laps_caption_pos+(vect){0,-(long double)misc.rectangle().h,0});
+		misc.display();
+
+		display_timer_elements(1);
 	}
 	void updatefpslimits(double min_fps,double max_fps)
 	{
@@ -722,7 +757,7 @@ public:
 	}
 	void set_message()
 	{
-		if(avg>target)
+		if((avg*laps.size()+t.elapse()/1000.f)/(laps.size()+1)>target)
 		{
 			if(message!="Hurry up!")
 				if(buzz)
