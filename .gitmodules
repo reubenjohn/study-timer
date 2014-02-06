@@ -4,3 +4,6 @@
 [submodule "aria"]
 	path = aria
 	url = https://github.com/PhySim/ARIA.git
+[submodule "global_assets"]
+	path = global_assets
+	url = https://github.com/reubenjohn/global_assets

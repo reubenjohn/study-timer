@@ -4,7 +4,6 @@
  *  Created on: Dec 26, 2013
  *      Author: Reuben
  */
-
 #include <SDL/SDL.h>
 #include <SDL/SDL_mixer.h>
 #include <string>
@@ -14,6 +13,7 @@
 #include <windows.h>
 #include <ctime>
 
+#include "global_assets/global_assets.h"
 #include <physim/headers/framer.hpp>
 #include <physim/headers/vect.hpp>
 #include <aria/headers/global_assets.hpp>
@@ -21,134 +21,46 @@
 #include <headers/mouse.hpp>
 
 using namespace std;
-class SDL
-{
-public:
-	SDL_Surface* scr;
-	SDL_Event event;
-	HWND hwnd;
-	bool quit,windowed;
-	SDL(SDL_Surface* screen)
-	{
-		quit=false;
-		windowed=true;
-		hwnd=FindWindowA("ConsoleWindowClass",NULL);
-		ShowWindow(hwnd,false);
-		SDL_Init(SDL_INIT_EVERYTHING);
-		SDL_EnableUNICODE(SDL_ENABLE);
-		TTF_Init();
-		Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 );
-		Mix_Init(MIX_INIT_MP3);
-		scr=screen;
-	}
-	~SDL()
-	{
-		Mix_Quit();
-		TTF_Quit();
-		SDL_Quit();
-	}
-	void wait()
-	{
-		bool stop=false;
-		while(SDL_PollEvent(&event));
-		SDL_Event e;
-		while(!quit&&!stop)
-		{
-			if(SDL_WaitEvent(&e))
-			{
-				if(e.type==SDL_KEYDOWN)
-					stop=true;
-				if(e.type==SDL_QUIT)
-					quit=true;
-			}
-		}
-	}
-	void pause(unsigned int pause_time)
-	{
-		timer T;
-		T.start();
-		while(SDL_PollEvent(&event));
-		SDL_Event e;
-		while(!quit&&T.elapse()<pause_time)
-		{
-			if(SDL_PollEvent(&e))
-			{
-				if(e.type==SDL_QUIT)
-					quit=true;
-			}
-			SDL_Delay(1);
-		}
-	}
-	int poll_event()
-	{
-		return SDL_PollEvent(&event);
-	}
-	int wait_event()
-	{
-		return SDL_WaitEvent(&event);
-	}
-	void SDL_handle_events()
-	{
-		if(event.type==SDL_QUIT)
-		{
-			quit=true;
-		}
-	}
-	void update()
-	{
-		if(scr)
-			SDL_Flip(scr);
-	}
-	bool toggle_fullscreen(vect screen_dimensions)
-	{
-	    if( windowed == true )
-	    {
-	        scr = SDL_SetVideoMode( screen_dimensions.x, screen_dimensions.y, screen_dimensions.z, SDL_SWSURFACE | SDL_RESIZABLE | SDL_FULLSCREEN );
 
-	        if(scr)
-	        {
-	        	return windowed = false;
-	        }
-	        else
-	        {
-	        	return false;
-	        }
-	    }
-	    else
-	    {
-	    	scr = SDL_SetVideoMode( screen_dimensions.x, screen_dimensions.y , screen_dimensions.z, SDL_SWSURFACE | SDL_RESIZABLE );
-	        if(scr)
-	        {
-	        	return windowed = true;
-	        }
-	        else
-	        {
-	        	return false;
-	        }
-	    }
-	    return false;
-	}
-};
 #define stop___ {bool stop=false;while(!stop){if(SDL_WaitEvent(&event))if(event.type==SDL_KEYDOWN||event.type==SDL_QUIT){stop=true;if(event.type==SDL_QUIT)ended=true;}}}
 
 class STUDY_TIMER:public SDL
 {
 	bool First_run,need_target,mouse_lock;
-	unsigned int next_alarm,laps_font_size,scroll_position;
+	unsigned int next_alarm,laps_font_size,scroll_position,target;
+	int catchup_time;
 	Uint32 background_col;
 	vector<float> laps;
-	float avg,target,lap_progress;
+	float avg,instantaneous_average,lap_progress;
 	vect scrdim;
 	framer frm;
 	timer runtimer,first_timer,t,warn,mesaage_update,total_elapse;
 	Mix_Chunk *beat,*beat_z,*beep,*ding,*kaching,*punch,*blast,*buzz;
 	SDL_Rect progress;
-	GRAPHIC_STRING total_elapsed_caption,total_elapsed,elapse_caption,elapse,laptime,average_caption,average,misc,message;
-	vect study_timer_pos,total_elapsed_caption_pos,total_elapsed_pos,elapse_caption_pos,elapse_pos,laptime_pos,average_caption_pos,average_pos,message_pos;
-	vect lap_pos,lap_dim,toggle_pos,toggle_dim,target_b_pos,target_b_dim,save_state_pos,save_state_dim,load_pos,load_dim,reset_b_pos,reset_b_dim;
-	GRAPHIC_STRING graphic_laps_caption,goal_time_caption;
+	TTF_Font* startup_font;
+	GRAPHIC_STRING misc,
+				total_elapsed_caption,total_elapsed,elapse_caption,elapse,
+				laptime,
+				average_caption,average,
+				message,
+				graphic_laps_caption,
+				goal_time_caption,
+				catchup_caption,catchup;
 	vector<GRAPHIC_STRING*> graphic_laps;
-	vect graphic_laps_caption_pos,graphic_laps_pos,goal_time_caption_pos;
+	vect study_timer_pos,
+		total_elapsed_caption_pos,total_elapsed_pos,elapse_caption_pos,elapse_pos,
+		laptime_pos,
+		average_caption_pos,average_pos,
+		message_pos,
+		graphic_laps_caption_pos,graphic_laps_pos,
+		goal_time_caption_pos,
+		catchup_caption_pos,catchup_pos;
+	vect lap_pos,lap_dim,
+		toggle_pos,toggle_dim,
+		target_b_pos,target_b_dim,
+		save_state_pos,save_state_dim,
+		load_pos,load_dim,
+		reset_b_pos,reset_b_dim;
 	GRAPHIC_STRING_INPUT user;
 	vect user_pos;
 	mouse ms;
@@ -276,7 +188,9 @@ public:
 		graphic_laps_pos=graphic_laps_caption_pos+(vect){0,scrdim.y/25,0};
 		refresh_lap_positions();
 		goal_time_caption_pos=total_elapsed_caption_pos+(vect){scrdim.x*0.3,0,0};
-		user_pos=goal_time_caption_pos+(vect){scrdim.x/22,scrdim.y/15,0};
+		user_pos=goal_time_caption_pos+(vect){0,scrdim.y/15,0};
+		catchup_caption_pos=(vect){goal_time_caption_pos.x,(user_pos.y+toggle_pos.y)/2,0};
+		catchup_pos=(vect){catchup_caption_pos.x,(catchup_caption_pos.y+toggle_pos.y)/2,0};
 	}
 	void load_timer_elements()
 	{
@@ -305,11 +219,13 @@ public:
 			elapse.set_color(0,255,0);
 			elapse.set_position(elapse_pos);
 			elapse.set_update_interval(20);
-			elapse.set(0,"%8.3");
+			elapse=decimal_format_string(0,"%8.3");
 
 			message.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",50));
-			message.set_update_interval(5000);
+			elapse.set_color(0,255,0);
 			message.set_position(message_pos);
+			message.set_update_interval(5000);
+			message="Welcome!";
 
 			graphic_laps_caption.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",laps_font_size));	//this statement is required to pre-load the lap vector's font size into the font pocket...
 			graphic_laps_caption.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
@@ -343,7 +259,19 @@ public:
 			user.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
 			user.set_position(user_pos);
 			user.set_color(150,150,255);
-			user.set(60);
+			user=60;
+
+			catchup_caption.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
+			catchup_caption.set_position(catchup_caption_pos);
+			catchup_caption.set_update_interval(5000);
+			catchup_caption.set_color(50,50,50);
+			catchup_caption="Catchup Time";
+
+			catchup.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
+			catchup.set_position(catchup_pos);
+			catchup.set_update_interval(100);
+			catchup.set_color(50,50,50);
+			catchup.set_time(catchup_time);
 
 			toggle.graphic_text->set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
 			toggle.set_color(0,255,0);
@@ -415,6 +343,8 @@ public:
 		reset_b.display(force);
 		goal_time_caption.display(force);
 		user.display(force);
+		catchup_caption.display(force);
+		catchup.display(force);
 	}
 	void overlay_help()
 	{
@@ -498,6 +428,12 @@ public:
 		misc.display();
 
 		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",20));
+		misc="Amount of time by which u lead/lag";
+		misc.render_image(1);
+		misc.set_position(catchup_pos+(vect){0,(long double)catchup.rectangle().h,0});
+		misc.display();
+
+		misc.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",20));
 		misc="List of all laps made";
 		misc.render_image(1);
 		misc.set_position(graphic_laps_caption_pos+(vect){0,-(long double)misc.rectangle().h,0});
@@ -545,13 +481,13 @@ public:
 			background_col=0x009999;
 		}
 	}
-	void change_target(unsigned int new_target)
+	void change_target(float new_target)
 	{
 		target_b.set_color(200,100,0);
-		target=new_target;
-		next_alarm=(target*1000+t.elapse())/2;
+		target=new_target*1000;
+		next_alarm=(target+t.elapse())/2;
 		set_need_target(false);
-		user.set(target,"%-8.0f");
+		user.set_time(target);
 	}
 	bool user_completed()
 	{
@@ -662,7 +598,7 @@ public:
 	void play_alarm()
 	{
 		Mix_PlayChannel(-1,beep,0);
-		next_alarm=(target*1000+t.elapse())/2;
+		next_alarm=(target+t.elapse())/2;
 		warn.reset();
 		warn.start();
 	}
@@ -718,14 +654,15 @@ public:
 		t.reset();
 		t.start();
 		total_elapse.start();
-		next_alarm=target*1000/2;
+		next_alarm=target/2;
 	}
 	void reset_stats(bool quietly=false)
 	{
 		if(blast&&!quietly)
 			Mix_PlayChannel(-1,blast,0);
+		message.set_color(0,0,0);
 		message="Nothing to say";
-		avg=0;
+		instantaneous_average=avg=0;
 		clear_laps();
 		t.reset();
 		total_elapse.reset();
@@ -735,12 +672,22 @@ public:
 		elapse.set_time((int)t.elapse());
 		total_elapsed.set_time((int)total_elapse.elapse());
 		if(target!=0)
-			lap_progress=((double)t.elapse()/(target*1000.0));
+			lap_progress=((double)t.elapse()/(target));
 		else
 			lap_progress=0;
 		progress.h=scr->clip_rect.h*lap_progress;
 		progress.y=scr->clip_rect.h-progress.h;
-		average.set_time((avg*laps.size()+t.elapse())/(laps.size()+1));
+		instantaneous_average=(avg*laps.size()+t.elapse())/(laps.size()+1);
+		average.set_time(instantaneous_average);
+		if(laps.size())
+			catchup_time=((int)target-instantaneous_average)*laps.size();
+		else
+			catchup_time=((int)target-(int)t.elapse());
+		if(catchup_time>=0)
+			catchup.set_color(0,250,0);
+		else
+			catchup.set_color(250,0,0);
+		catchup.set_time(catchup_time);
 	}
 	void save_to_file()
 	{
@@ -756,12 +703,11 @@ public:
 	{
 		reset_stats(1);
 		ifstream fin("Data/save.txt");
-		unsigned int total_elapsed;
-		float temp=0;
-		fin>>target>>temp>>total_elapsed;
+		unsigned int current_elapse,total_elapsed,temp=0;
+		fin>>target>>current_elapse>>total_elapsed;
 		total_elapse.set(total_elapsed);
-		t.set(temp);
-		user.set((double)target,"%3.0f");
+		t.set(current_elapse);
+		user=millisecond_fotmatted_string(target);
 		while(fin>>temp)
 		{
 			laps.push_back(temp);
@@ -777,7 +723,7 @@ public:
 				char U[10];
 				sprintf(U,"%-4i",laps.size());
 				contents.assign(U);
-				sprintf(U,"%8.3f",temp);
+				sprintf(U,"%8.3f",temp/1000.0);
 				contents.append(") ");
 				contents.append(U);
 				*p=contents;
@@ -801,7 +747,7 @@ public:
 	}
 	void set_message()
 	{
-		if((avg*laps.size()+t.elapse()/1000.f)/(laps.size()+1)>target)
+		if(instantaneous_average>target)
 		{
 			if(message!="Hurry up!")
 				if(buzz)
@@ -849,6 +795,7 @@ public:
 	STUDY_TIMER(vect screen_dimensions,const char* default_font_location,unsigned int default_font_size)
 	:
 		SDL(SDL_SetVideoMode(screen_dimensions.x,screen_dimensions.y,screen_dimensions.z,SDL_SWSURFACE|SDL_RESIZABLE)),
+		misc(scr),
 		total_elapsed_caption(scr),
 		total_elapsed(scr),
 		elapse_caption(scr),
@@ -856,10 +803,11 @@ public:
 		laptime(scr),
 		average_caption(scr),
 		average(scr),
-		misc(scr),
 		message(scr),
 		graphic_laps_caption(scr),
 		goal_time_caption(scr),
+		catchup_caption(scr),
+		catchup(scr),
 		user(scr),
 		toggle(scr),
 		lap(scr),
@@ -877,6 +825,7 @@ public:
 		First_run=Firstrun_file_status();
 		background_col=0x009999;
 		change_target(60);
+		process_timer_stats();
 		mouse_lock=false;
 		runtimer.start();warn.start();mesaage_update.start();first_timer.start();
 		kaching=Mix_LoadWAV("audio/kaching.wav");
@@ -892,22 +841,23 @@ public:
 
 		load_timer_element_positions(screen_dimensions);
 
-		TTF_Font* temp=TTF_OpenFont("Fonts/KeraterMedium.ttf",40);
+		TTF_Font* temp=TTF_OpenFont("Fonts/KeraterMedium.ttf",20);
 		SDL_Color col={0,250,0};
 		SDL_Rect rec={10,10,0,0};
 		SDL_Surface* temp2=TTF_RenderText_Solid(temp,"Starting up...",col);
 		SDL_BlitSurface(temp2,NULL,scr,&rec);
 		update();
-		TTF_CloseFont(temp);
-		SDL_FreeSurface(temp2);
+		SDL_Delay(500);
 		SDL_FillRect(scr,&scr->clip_rect,0x8800DD);
 		GRAPHIC_STRING study_timer(scr);
-		font_pocket.new_font("Fonts/KeraterMedium.ttf",40);
 		study_timer.set_color(255,0,0);
 		study_timer="Study Timer";
-		study_timer.set_font(font_pocket.new_font("Fonts/KeraterMedium.ttf",40));
+		TTF_CloseFont(temp);
+		SDL_FreeSurface(temp2);
+		startup_font=TTF_OpenFont("Fonts/KeraterMedium.ttf",40);;
+		study_timer.set_font(startup_font);
 		study_timer.set_position(study_timer_pos);
-		study_timer.display();
+		study_timer.display(1);
 		update();
 		pause(1000);
 		progress=scr->clip_rect;
@@ -924,6 +874,14 @@ public:
 		SDL_FillRect(scr,&scr->clip_rect,0x999999);
 		SDL_Flip(scr);
 		SDL_Delay(100);
+
+		if(startup_font)
+		{
+			TTF_CloseFont(startup_font);
+			fout.open("logs/allocation log.txt",ios::app);
+			fout<<"Closed startup_font\n";
+			fout.close();
+		}
 		if(beat)
 		{
 			Mix_FreeChunk(beat);
