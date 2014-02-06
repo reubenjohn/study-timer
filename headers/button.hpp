@@ -11,7 +11,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <string>
-#include <aria/headers/global_assets.hpp>
+#include <global_assets/graphic_string.hpp>
 
 using namespace std;
 class button

@@ -16,7 +16,7 @@
 #include "global_assets/global_assets.h"
 #include <physim/headers/framer.hpp>
 #include <physim/headers/vect.hpp>
-#include <aria/headers/global_assets.hpp>
+#include <global_assets/graphic_string.hpp>
 #include <headers/button.hpp>
 #include <headers/mouse.hpp>
 
